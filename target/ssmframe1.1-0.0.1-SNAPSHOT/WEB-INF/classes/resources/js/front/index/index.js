@@ -1,3 +1,0 @@
-function moreOnShow(){
-	$("#moreShow").show();
-}

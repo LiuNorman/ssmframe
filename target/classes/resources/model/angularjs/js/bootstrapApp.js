@@ -1,1 +1,0 @@
-var bootstrapApp=angular.module('bootstrap',[]);
