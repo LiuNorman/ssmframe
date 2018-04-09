@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-4.2.xsd"
+       default-lazy-init="true">
+
+    <!-- 消息转换器 -->
+    <bean id="textMsgConverter" class="com.function.message.mq.TextMsgConverter" />
+
+    
+  
+
+    <!-- 链接工厂 -->
+    <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="${AMQ.URL}" />
+        <!-- 超过3000毫秒,默认连接失败,抛出连接异常 -->
+        <property name="sendTimeout" value="3000" />
+        <property name="useAsyncSend" value="false"/>
+    </bean>
+    <bean id="pooledConnFactory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <!--最大连接数-->
+        <property name="maxConnections" value="3" />
+        <property name="expiryTimeout" value="60000" />
+    </bean>
+    
+	<!-- Spring提供的JMS工具类，它可以进行消息发送、接收等 --> 
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <!-- MQl连接池 -->
+        <property name="connectionFactory" ref = "pooledConnFactory" />
+        <property name="messageConverter" ref="textMsgConverter" />
+        <property name="defaultDestination" ref="destination" />
+    </bean>
+    
+    <!-- topic 测试主题  一对多-->
+    <bean id="destination" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg index="0" value="${AMQ.PRODUCER.TEST}" />
+    </bean>
+    <!-- 主题 -->
+    <bean id="redbannerTopic" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg index="0" value="${AMQ.PRODUCER}" />
+    </bean>
+    <!-- 点对点 -->
+    <!-- <bean id="consumerQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg index="0" value="${AMQ.CONSUMER}" />
+    </bean> -->
+
+
+    <!-- 消息生产者 -->
+    <bean id="mqProducer" class="com.function.message.mq.MQProducer" />
+
+    <!-- consumer配置 -->
+    <bean id="mqConsumer" class="com.function.message.mq.MQConsumer" />
+
+    <bean id="msgListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+        <constructor-arg ref="mqConsumer" />
+        <property name="messageConverter" ref="textMsgConverter" />
+        <property name="defaultListenerMethod" value="receive" />
+    </bean>
+
+    <bean id="listenerContainer_consumer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="pooledConnFactory" />
+        <property name="destination" ref="redbannerTopic" />
+        <property name="messageListener" ref="msgListener" />
+        <property name="concurrentConsumers" value="1" />
+    </bean>
+   
+</beans>

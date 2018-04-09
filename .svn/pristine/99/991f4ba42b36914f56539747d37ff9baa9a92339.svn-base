@@ -1,0 +1,94 @@
+package com.frame.base.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.frame.base.entity.OrderInfo;
+import com.frame.pojo.OrderInfoQO;
+
+
+/**
+ * 接口必须添加注释
+ * 
+ * @author Norman
+ *
+ */
+public interface OrderMapper {
+
+	/**
+	 * 
+	 * 编辑人：Norman
+	 *
+	 * 功能：发单
+	 * 时间：2015年12月22日
+	 * @param userId
+	 * @return
+	 */
+	public int sendOrderInfo(OrderInfo order);
+	
+	/**
+	 * 
+	 * 编辑人：Norman
+	 *
+	 * 功能：发单
+	 * 时间：2015年12月22日
+	 * @param userId
+	 * @return
+	 */
+	public int sendOrderLogistics(OrderInfo order);
+	
+	/**
+	 * 
+	 * 编辑人：Norman
+	 *
+	 * 功能：发单
+	 * 时间：2015年12月22日
+	 * @param userId
+	 * @return
+	 */
+	public int sendOrderDetail(OrderInfo order);
+
+	/**
+	 * 编辑人：Norman
+	 *
+	 * 功能：接单
+	 * 时间：2015年12月22日
+	 * @param userId
+	 * @return
+	 */
+	public int reciveOrder(OrderInfo order);
+	
+	/**
+	 * 
+	 * 编辑人：Norman
+	 *
+	 * 功能：测试，获取订单信息
+	 * 时间：2015年12月22日
+	 * @param userId
+	 * @return
+	 */
+	public OrderInfo getOrderById(@Param("id")int id);
+	
+	/**
+	 * 
+	 * 编辑人：Norman
+	 *
+	 * 功能：测试，获取订单信息
+	 * 时间：2015年12月22日
+	 * @param userId
+	 * @return
+	 */
+	public List<OrderInfoQO> getOrders(@Param("select")String select,@Param("start")int start,@Param("end")int end);
+	
+	/**
+	 * 
+	 * 编辑人：Norman
+	 *
+	 * 功能：测试，获取订单信息
+	 * 时间：2015年12月22日
+	 * @param userId
+	 * @return
+	 */
+	public List<OrderInfo> getOrdersById(@Param("id")int id,@Param("start")int start,@Param("end")int end);
+}

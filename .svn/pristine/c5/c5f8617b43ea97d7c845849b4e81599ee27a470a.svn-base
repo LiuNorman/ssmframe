@@ -1,0 +1,304 @@
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/showPage/common/common.jsp" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>物流管理系统</title>
+
+<link rel="stylesheet" type="text/css" href="${path}/resources/css/mng/model/admin_style.css" />
+<link rel="stylesheet" type="text/css" href="${path}/resources/css/mng/model/skins/tpphp.css" />
+
+
+<script src="${path}/resources/js/common/jquery-1.4.4.min.js"></script>
+<script src="${path}/resources/js/mng/index/main.js"></script>
+<script src="${path}/resources/js/mng/index/index.js"></script>
+<script src="${path}/resources/js/mng/index/artDialog.js"></script>
+<script src="${path}/resources/js/mng/usermng/usermng.js"></script>
+
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery.min.js"></script>
+ <!-- Custom Theme files -->
+<link href="${path }/resources/css/common/model/style.css" rel='stylesheet' type='text/css' />
+<!-- Custom Theme files -->
+
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+<script>
+	function openMsgWindow() {
+		
+		art.dialog({
+			id:'msgDialog',
+			title: '提示信息',
+			lock:false,
+			fixed:true,
+			width:300,
+			height:100,
+			ok: function(){
+				this.title('成功提示！').content('操作成功！').time(2);
+				return false;
+			 },
+			 cancel: function(){
+				
+				return true;
+			 },
+			content: "<div style='line-height:25px'>您有新的站内信<Br><a href=\"http://www.uimaker.com\">点此阅读</a></div>"
+		});
+	}
+</script>
+
+</head>
+<!-- style="overflow:hidden;" -->
+<body >
+	<%@ include file="/WEB-INF/showPage/common/top.jsp"%>
+	<%-- <div class="side_switch" id="side_switch">
+	</div>
+	<div class="side_switchl" id="side_switchl">
+	</div>
+	<div class="left">
+		<div class="member_info"><div class="member_ico">
+		<img src="${path}/resources/images/mng/model/a.png" width="43" height="43"></div>
+		<a class="system_a" href="">系统设置</a><a href="" class="system_log">注销</a>
+		<a href="${path}/mng/index/loginOut.rb" class="system_logout">退出</a>
+		</div>
+		<div class="left_title">常用功能操作</div>
+		<ul class="side">
+			<li><a href="#"  class="selected">网站栏目管理</a></li>
+			<li><a href="#">我发布的订单</a></li>
+			<li><a href="#">评论管理</a></li>
+			<li><a href="#">内容回收站</a></li>
+		</ul>
+		<ul class="side catsub">
+			<li class="feed"><a href="http://www.redbanner.icoc.in/" target="_blank">网站订阅查看</a></li>
+			<li class="side_about"><a href="http://www.redbanner.icoc.in/" target="_blank">版权声明</a></li>
+		</ul>
+	</div> --%>
+	<!---- container ---->
+		<!---- header ----->
+		<div class="header">
+			<div class="container">
+				<!--- logo ----->
+				<div class="logo">
+					<a href="index.html"><span>M</span>oto</a>
+				</div>
+				<!--- logo ----->
+				<!--- top-nav ----->
+				<div class="top-nav">
+					<span class="menu"> </span>
+					<ul>
+						<li class="active"><a href="${path}/mng/index/index.rb">首页</a></li>
+						<li><a href="${path}/front/index/contact.rb">关于我们</a></li>
+						<li><a href="${path}/front/index/service.rb">服务范围</a></li>
+						<li><a href="${path}/front/index/blog.rb">Blog</a></li>
+						<li><a href="${path}/front/index/contact.rb">联系我们</a></li>
+					</ul>
+				</div>
+				<div class="clearfix"> </div>
+				<!--- top-nav ----->
+					<!----- script-for-nav ---->
+				<script>
+					$( "span.menu" ).click(function() {
+					  $( ".top-nav ul" ).slideToggle( "slow", function() {
+					    // Animation complete.
+					  });
+					});
+				</script>
+				<!----- script-for-nav ---->
+		<!---- banner --->
+		<div class="banner text-center">
+			<h1>discover the features of <span>M</span>oto theme</h1>
+			<p>Here you can find some of our latest works, to see the details of these works just click the thumbnails below.</p>
+			<a class="seemore" href="#">Seemore</a>
+		</div>
+		<!---- banner --->
+		<!---- banner-grids ---->
+		<div class="banner-grids">
+			<div class="col-md-4 banner-grid">
+				<span><img src="${path}/resources/images/mng/index/icon.png" title="tootls" /></span>
+				<h3><a href="#">Our Tools</a></h3>
+				<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC,</p>
+			</div>
+			<div class="col-md-4 banner-grid">
+				<span><img src="${path}/resources/images/mng/index/icon1.png" title="tootls" /></span>
+				<h3><a href="#">Our licence</a></h3>
+				<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC,</p>
+			</div>
+			<div class="col-md-4 banner-grid">
+				<span><img src="${path}/resources/images/mng/index/icon3.png" title="tootls" /></span>
+				<h3><a href="#">Our info</a></h3>
+				<p>Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC,</p>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+		<!---- banner-grids ---->
+			</div>
+			</div>
+		<!---- header ----->
+		<!---- welcome-Note ---->
+		<div class="welcome-note">
+			<div class="container">
+				<div class="wel-head text-center">
+					<h3>WE Are <span>M</span>oto</h3>
+					<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</p>
+				</div>
+			</div>
+		</div>
+		<!---- welcome-Note ---->
+		<!---- top-grids ---->
+		<div class="top-grids">
+			<div class="container">
+				<div class="col-md-4 top-grid">
+					<h4>Available</h4>
+					<p>If you are going to use a passage of Lorem Ipsum, there isn't anything embarrassing hidden in the middle of text.</p>
+				</div>
+				<div class="col-md-4 top-grid">
+					<h4>Available</h4>
+					<p>If you are going to use a passage of Lorem Ipsum, there isn't anything embarrassing hidden in the middle of text.</p>
+				</div>
+				<div class="col-md-4 top-grid">
+					<h4>Available</h4>
+					<p>If you are going to use a passage of Lorem Ipsum, there isn't anything embarrassing hidden in the middle of text.</p>
+				</div>
+				<div class="col-md-4 top-grid">
+					<h4>Available</h4>
+					<p>If you are going to use a passage of Lorem Ipsum, there isn't anything embarrassing hidden in the middle of text.</p>
+				</div>
+				<div class="col-md-4 top-grid">
+					<h4>Available</h4>
+					<p>If you are going to use a passage of Lorem Ipsum, there isn't anything embarrassing hidden in the middle of text.</p>
+				</div>
+				<div class="col-md-4 top-grid">
+					<h4>Available</h4>
+					<p>If you are going to use a passage of Lorem Ipsum, there isn't anything embarrassing hidden in the middle of text.</p>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+		<!---- top-grids ---->
+		<!---- mid-grids ---->
+		<div class="mid-grids">
+			<div class="container">
+				<div class="col-md-8 mid-grids-left">
+					<h2>Latest News from <span><label>M</label>oto</span></h2>
+					<p>Quisque vestibulum arcu at libero commodo lacinia. Pellentesque imperdiet placerat nisl ut vestibulum</p>
+					<!---- latest-news-grids---->
+					<div class="latest-news-grids">
+						<div class="latest-news-grid">
+							<img src="${path}/resources/images/mng/index/m1.jpg" title="name" />
+							<h4><a href="#">Preparing dish for you with love</a></h4>
+							<span>22 Sept 2013, by <a href="#">Admin</a></span>
+							<p>Etiam pretium quam sed lectus mollis, sed element working cursus. Phasellus vitae mollis sem. </p>
+							<a class="news-btn" href="singlepage.html">Read More</a>
+						</div>
+						<div class="latest-news-grid">
+							<img src="${path}/resources/images/mng/index/m3.jpg" title="name" />
+							<h4><a href="#">Preparing dish for you with love</a></h4>
+							<span>22 Sept 2013, by <a href="#">Admin</a></span>
+							<p>Etiam pretium quam sed lectus mollis, sed element working cursus. Phasellus vitae mollis sem. </p>
+							<a class="news-btn" href="singlepage.html">Read More</a>
+						</div>
+						<div class="latest-news-grid">
+							<img src="${path}/resources/images/mng/index/m4.jpg" title="name" />
+							<h4><a href="#">Preparing dish for you with love</a></h4>
+							<span>22 Sept 2013, by <a href="#">Admin</a></span>
+							<p>Etiam pretium quam sed lectus mollis, sed element working cursus. Phasellus vitae mollis sem. </p>
+							<a class="news-btn" href="singlepage.html">Read More</a>
+						</div>
+						<div class="latest-news-grid">
+							<img src="${path}/resources/images/mng/index/m5.jpg" title="name" />
+							<h4><a href="#">Preparing dish for you with love</a></h4>
+							<span>22 Sept 2013, by <a href="#">Admin</a></span>
+							<p>Etiam pretium quam sed lectus mollis, sed element working cursus. Phasellus vitae mollis sem. </p>
+							<a class="news-btn" href="singlepage.html">Read More</a>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+					<!---- latest-news-grids---->
+				</div>
+				<div class="col-md-4 mid-grids-right">
+					<h3><span><label>M</label>oto</span> Services</h3>
+					<p>We wont let you down, we are here to make you feel..</p>
+					<div class="services-list">
+						<ul>
+							<li><a href="#"><span> </span><small>Etiam pretium quam sed lectus mollis</small></a></li>
+							<li><a href="#"><span> </span><small>Vivamus in vulputate tellus. Morbi interdum</small></a></li>
+							<li><a href="#"><span> </span><small>aucibus nibh, id rutrum elit hendrerit quis</small></a></li>
+							<li><a href="#"><span> </span> <small>Ut ut turpis nec turpis bibendum aliquet</small></a></li>
+							<li><a href="#"><span> </span><small>neque. Nulla sollicitudin tristique nisl, ac porttitor</small></a></li>
+							<li><a href="#"><span> </span><small>ligula laoreet sit amet. Quisque non fringilla ante.</small></a></li>
+							<li><a href="#"><span> </span><small>Etiam pretium quam sed lectus mollis</small></a></li>
+							<li><a href="#"><span> </span><small>Vivamus in vulputate tellus. Morbi interdum</small></a></li>
+							<li><a href="#"><span> </span><small>aucibus nibh, id rutrum elit hendrerit quis</small></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+		<!---- mid-grids ---->
+	<!---- container ---->
+	<div class="footer">
+				<div class="top-footer">
+					<div class="container">
+						<div class="top-footer-grids">
+							<div class="top-footer-grid">
+								<h3>Contact us</h3>
+								<ul class="address">
+									<li><span class="map-pin"> </span><label>55 Main St.Toronto, ON M1H 3A5</label></li>
+									<li><span class="mob"> </span>(416) 555-5252</li>
+									<li><span class="msg"> </span><a href="mailto:yourname@yoursite.com">hello@moto.com</a></li>
+								</ul>
+							</div>
+							<div class="top-footer-grid">
+								<h3>Latest posts</h3>
+								<ul class="latest-post">
+									<li><a href="#"><span class="icon1"> </span> Made With Love In Toronto</a> </li>
+									<li><a href="#"><span class="icon2"> </span> Startup News &amp; Emerging Tech</a> </li>
+									<li><a href="#"><span class="icon3"> </span> Bitcoin Will Soon Rule The World</a> </li>
+									<li><a href="#"><span class="icon4"> </span> Wearable Technology On The Rise</a> </li>
+									<li><a href="#"><span class="icon5"> </span> Learn Web Design In <label>30 Days!</label></a> </li>
+								</ul>
+							</div>
+							<div class="top-footer-grid">
+								<h3>Latest tweets</h3>
+								<div class="tweet-box">
+									<div class="tweet-box-icon">
+										<span> </span>
+									</div>
+									<div class="tweet-box-info">
+										<p>Confucius: Life is really simple, but we insist on making it complicated. <span><a href="#">#famousquotes</a></span><label><a href="#"> 8 mins ago</a></label></p>
+									</div>
+									<div class="clear"> </div>
+								</div>
+								<div class="tweet-box">
+									<div class="tweet-box-icon">
+										<span> </span>
+									</div>
+									<div class="tweet-box-info">
+										<p>Confucius: Life is really simple, but we insist on making it complicated. <span><a href="#">#famousquotes</a></span><label><a href="#"> 8 mins ago</a></label></p>
+									</div>
+									<div class="clear"> </div>
+								</div>
+							</div>
+							<div class="clear"> </div>
+						</div>
+					</div>
+				</div>
+				<!----start-bottom-footer---->
+				<div class="bottom-footer">
+					<div class="container"> 
+						<div class="bottom-footer-left">
+							<p>Copyright &copy; 2014.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></p>
+						</div>
+						<div class="clear"> </div>
+					</div>
+				</div>
+				<!----//End-bottom-footer---->
+			</div>
+	<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
+
+ </body>
+</html>

@@ -1,0 +1,6 @@
+//分页处理js文件
+
+//分页上一页。下一页请求
+function pagination(url,start,end){
+	
+}

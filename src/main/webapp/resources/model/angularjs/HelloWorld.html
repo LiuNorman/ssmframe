@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+
+</head>
+<body>
+标记ng-app告诉AngularJS处理整个HTML页并引导应用：<br/>
+'{{}}'的使用<br/>
+用户名：<input type="text" ng-model="username" placeholder="World"/>
+Hello {{username || 'World'}}!
+<br/>
+<div ng-init="firstName='Norman'">
+<p>姓名为<span ng-bind="firstName"></span></p>
+</div>
+<div data-ng-init="first='h5------Norman'">
+<p>姓名为<span data-ng-bind="first"></span></p>
+</div>
+<div>
+ 	<p>我的第一个表达式：5+5= {{ 5 + 5 }}</p>
+</div>
+
+
+
+<div ng-init="mount=1;money=12.5">
+<p>总价：{{ mount * money }}</p>
+<p>总价：ng-bind <span ng-bind="mount * money"></span></p>
+</div>
+
+<h2>angularjs 對象</h2>
+<div ng-init="person={names:'Norman'}">
+  <p>对象 获取用户名 {{person.names}}</p>
+</div>
+<h2>angularjs 数组</h2>
+<div ng-init="persons=['liu','Norman']">
+  <p>数组 {{persons[1]}}</p>
+</div>
+
+AngularJS 指令
+AngularJS 指令是扩展的 HTML 属性，带有前缀 ng-。
+ng-app 指令初始化一个 AngularJS 应用程序。
+ng-init 指令初始化应用程序数据。
+ng-model 指令把元素值（比如输入域的值）绑定到应用程序。
+
+<div ng-init="first_name='刘晓文'">
+    <p><input type="text" ng-model="first_name"/></p>
+   	你输入的为：{{first_name}}
+</div>
+
+<div ng-init="names=['Jani','Hege','Kai']">
+  <p>使用 ng-repeat 来循环数组</p>
+  <ul>
+    <li ng-repeat="x in names | ">
+      {{ x }}
+    </li>
+  </ul>
+<div>
+
+<script type="text/javascript" src="../../js/common/angular1.3.9/js/angular.min.js"></script>
+</body>
+</html>

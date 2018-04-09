@@ -1,0 +1,150 @@
+package com.frame.controller.mng;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.frame.base.entity.FrontMessage;
+import com.frame.base.entity.UserInfo;
+import com.frame.service.IndexService;
+import com.frame.service.UserService;
+import com.frame.util.Md5Encrypt;
+
+/**
+ * 后台管理操作
+ * 
+ * @author Norman
+ *
+ */
+@Controller("indexMngController")
+@RequestMapping("/mng/index/")
+public class IndexMngController {
+	
+	@Autowired
+	private IndexService indexService;
+	
+	@Autowired
+	private UserService userService;
+
+	 /**
+     * 功能：登陆功能 
+     * 
+     * 参数：@return
+     */
+    @RequestMapping("login")  
+    public ModelAndView login(){
+    	
+    	 
+    	return new ModelAndView("mngPage/login/login");
+    	
+    }
+    
+	/**
+	 * 编辑人：Norman
+	 *
+	 * 功能：后台管理主界面
+	 * 时间：2015年12月22日
+	 * @return
+	 */
+	@RequestMapping("index")
+	public ModelAndView index() {
+
+		// 
+		
+		ModelAndView modelAndView=new ModelAndView("mngPage/index/index");
+		
+		
+		
+		return  modelAndView;
+	}
+	
+	/**
+	 * 编辑人：Norman
+	 *
+	 * 功能：获取所有用户 测试方法
+	 * 
+	 * 时间：2015年12月22日
+	 * @return
+	 */
+	@RequestMapping("loginValidate")
+	@ResponseBody
+	public FrontMessage loginValidate(HttpServletRequest request,String userName,String password) {
+		password=Md5Encrypt.md5(password.toLowerCase());
+		FrontMessage message=new FrontMessage();
+		
+		
+		UserInfo user=this.userService.loginValidate(userName, password);
+		HttpSession session =request.getSession();
+		if(StringUtils.isEmpty(session)){
+			//session=new s
+		}
+		
+		request.getSession().setAttribute("userInfo", user);
+		if(user!=null){
+			message.setCode("success");
+			message.setMessage("登陆成功。");
+			message.setUrl("mng/index/index");
+		}else{
+			message.setCode("error");
+			message.setMessage("登陆失败。");
+		}
+		
+		return  message;
+	}
+	
+	/**
+	 * 编辑人：Norman
+	 *
+	 * 功能：获取所有用户 测试方法
+	 * 
+	 * 时间：2015年12月22日
+	 * @return
+	 */
+	@RequestMapping("selUser")
+	@ResponseBody
+	public UserInfo selUser() {
+		int userId = 0;
+		UserInfo user=this.indexService.getUserById(userId);
+	    
+		return  user;
+	}
+	
+	/**
+	 * 编辑人：Norman
+	 *
+	 * 功能：获取所有用户 测试方法
+	 * 
+	 * 时间：2015年12月22日
+	 * @return
+	 */
+	@RequestMapping("main")
+	public ModelAndView main() {
+		
+		ModelAndView modelAndView=new ModelAndView("mngPage/common/main");
+		
+		return  modelAndView;
+	}
+	
+	/**
+	 * 编辑人：Norman
+	 *
+	 * 功能：获取所有用户 测试方法
+	 * 
+	 * 时间：2015年12月22日
+	 * @return
+	 */
+	@RequestMapping("loginOut")
+	@ResponseBody
+	public ModelAndView loginOut(HttpServletRequest request) {
+		
+		ModelAndView modelAndView=new ModelAndView("mngPage/index/index");
+		request.getSession().removeAttribute("userInfo");
+		return  modelAndView;
+	}
+}

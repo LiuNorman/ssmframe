@@ -1,0 +1,21 @@
+package com.function.message.mq;
+
+import com.haibo.message.models.AbstractMessage;
+import com.haibo.message.service.AbstractMQUtil;
+
+public class MQOperation extends AbstractMQUtil{
+
+	//　读取一条消息
+	public boolean read(AbstractMessage arg0) {
+		// TODO Auto-generated method stub
+		
+		return false;
+	}
+
+	// 持久化
+	public boolean save(AbstractMessage arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

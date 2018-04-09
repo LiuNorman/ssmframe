@@ -1,0 +1,146 @@
+/*
+Navicat MySQL Data Transfer
+
+Source Server         : localhost_3306
+Source Server Version : 50528
+Source Host           : localhost:3306
+Source Database       : ssm
+
+Target Server Type    : MYSQL
+Target Server Version : 50528
+File Encoding         : 65001
+
+Date: 2016-02-20 08:49:56
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `t_order_detail`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_order_detail`;
+CREATE TABLE `t_order_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `orderName` varchar(255) DEFAULT NULL COMMENT '订单名称',
+  `customerId` int(255) DEFAULT NULL COMMENT '客户ID',
+  `courierId` int(255) NOT NULL COMMENT '快递员/司机',
+  `phone` varchar(20) DEFAULT NULL COMMENT '联系电话',
+  `address` varchar(255) DEFAULT NULL COMMENT '地址',
+  `createTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
+  `orderStatus` varchar(2) DEFAULT '1' COMMENT '订单状态',
+  `serviceTime` datetime DEFAULT NULL COMMENT '送达时间',
+  `requireTime` varchar(255) DEFAULT NULL COMMENT '要求时间间隔',
+  `orderInfoId` int(255) DEFAULT NULL COMMENT '订单ID',
+  `orderDescription` varchar(255) DEFAULT NULL COMMENT '订单描述',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_order_detail
+-- ----------------------------
+INSERT INTO `t_order_detail` VALUES ('2', 'ceshi', '1', '0', '21212211', 'ldkdkkd', '2016-02-05 00:00:00', null, '0', '2016-02-05 00:00:00', '10', null, 'dljfjaf');
+INSERT INTO `t_order_detail` VALUES ('3', '最新测试', '1', '0', '18354231330', '祉村', '2016-02-09 00:00:00', null, '0', '2016-02-09 00:00:00', '10', null, '测试订单');
+INSERT INTO `t_order_detail` VALUES ('4', '测试订单', '1', '0', '121212', '', '2016-02-09 00:00:00', null, '0', '2016-02-09 00:00:00', '10', null, '1212312');
+INSERT INTO `t_order_detail` VALUES ('5', '测试订单', '1', '0', '18354231330', '测试地址', '2016-02-13 00:00:00', null, '0', '2016-02-13 00:00:00', '10', null, '测试内容');
+
+-- ----------------------------
+-- Table structure for `t_order_logistics`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_order_logistics`;
+CREATE TABLE `t_order_logistics` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `orderName` varchar(255) DEFAULT NULL COMMENT '订单名称',
+  `customerId` int(255) DEFAULT NULL COMMENT '客户ID',
+  `courierId` int(255) NOT NULL COMMENT '快递员/司机',
+  `phone` varchar(20) DEFAULT NULL COMMENT '联系电话',
+  `address` varchar(255) DEFAULT NULL COMMENT '地址',
+  `createTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
+  `orderStatus` varchar(2) DEFAULT '1' COMMENT '订单状态',
+  `serviceTime` datetime DEFAULT NULL COMMENT '送达时间',
+  `requireTime` varchar(255) DEFAULT NULL COMMENT '要求时间间隔',
+  `orderInfoId` int(255) DEFAULT NULL COMMENT '订单ID',
+  `orderDescription` varchar(255) DEFAULT NULL COMMENT '订单描述',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_order_logistics
+-- ----------------------------
+INSERT INTO `t_order_logistics` VALUES ('2', '232323', '1', '0', '2323', '2323', '2016-02-05 00:00:00', null, '2', '2016-02-09 00:00:00', '10', null, '232323');
+INSERT INTO `t_order_logistics` VALUES ('3', 'ceshi', '1', '0', '21212211', 'ldkdkkd', '2016-02-05 00:00:00', null, '2', '2016-02-09 00:00:00', '10', null, 'dljfjaf');
+INSERT INTO `t_order_logistics` VALUES ('4', '最新测试', '1', '0', '18354231330', '祉村', '2016-02-09 00:00:00', null, '0', '2016-02-09 00:00:00', '10', null, '测试订单');
+INSERT INTO `t_order_logistics` VALUES ('5', '测试订单', '1', '0', '121212', '', '2016-02-09 00:00:00', null, '1', '2016-02-09 00:00:00', '10', null, '1212312');
+INSERT INTO `t_order_logistics` VALUES ('6', '测试订单', '1', '0', '18354231330', '测试地址', '2016-02-13 00:00:00', null, '0', '2016-02-13 00:00:00', '10', null, '测试内容');
+
+-- ----------------------------
+-- Table structure for `t_role_info`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_role_info`;
+CREATE TABLE `t_role_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '角色ID',
+  `roleName` varchar(255) NOT NULL COMMENT '角色名称',
+  `address` varchar(255) DEFAULT NULL COMMENT '地址',
+  `createTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
+  `roleStatus` varchar(2) DEFAULT '1' COMMENT '角色状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_role_info
+-- ----------------------------
+INSERT INTO `t_role_info` VALUES ('1', '刘晓文', null, null, null, '1');
+
+-- ----------------------------
+-- Table structure for `t_user_info`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_user_info`;
+CREATE TABLE `t_user_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cardID` varchar(255) DEFAULT NULL COMMENT '身份证',
+  `account` varchar(255) DEFAULT NULL COMMENT '账号',
+  `userName` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `age` int(11) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL COMMENT '电话',
+  `address` varchar(255) DEFAULT NULL COMMENT '地址',
+  `createTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
+  `userStatus` varchar(2) DEFAULT '1' COMMENT '用户状态',
+  `roleId` int(11) DEFAULT NULL COMMENT '用户类型',
+  `userMoney` varchar(255) DEFAULT NULL COMMENT '账户余额',
+  `makeMoney` varchar(255) DEFAULT NULL COMMENT '赚得的钱',
+  `consumption` varchar(255) DEFAULT NULL COMMENT '消费款',
+  `drivingLicenceImage` varchar(255) DEFAULT NULL COMMENT '驾驶证照片',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_user_info
+-- ----------------------------
+INSERT INTO `t_user_info` VALUES ('1', null, '刘晓文', '123456', '26', null, null, null, null, '1', null, null, null, null, null);
+INSERT INTO `t_user_info` VALUES ('2', '1212', '修改后的用户名', '1212', '0', '1212', '更新地址', null, null, null, '1', null, null, null, null);
+INSERT INTO `t_user_info` VALUES ('3', '1212', '12121', '1212', '12', '121', '12', null, null, '1', '0', null, null, null, null);
+INSERT INTO `t_user_info` VALUES ('4', '371323199007182115', '刘晓文测试', '123123', '27', '18354231330', '祉村', null, null, '1', '0', null, null, null, null);
+INSERT INTO `t_user_info` VALUES ('5', '12121212', 'woshi', 'e10adc3949ba59abbe56e057f20f883e', '12', '121321312', 'ldjslk', null, null, '1', '0', null, null, null, null);
+
+-- ----------------------------
+-- Table structure for `t_user_type`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_user_type`;
+CREATE TABLE `t_user_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userTypeName` varchar(255) NOT NULL,
+  `address` varchar(255) DEFAULT NULL COMMENT '地址',
+  `createTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
+  `userTypeStatus` varchar(2) DEFAULT '1' COMMENT '用户状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_user_type
+-- ----------------------------
+INSERT INTO `t_user_type` VALUES ('1', '刘晓文', null, null, null, '1');

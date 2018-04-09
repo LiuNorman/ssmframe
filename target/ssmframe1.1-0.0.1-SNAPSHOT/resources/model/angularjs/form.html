@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<form ng-app="formApp" ng-controller="formCrl" name="mineForm"  novalidate>
+	<p>姓：<input type="text" ng-model="firstName" name="firstName" required>
+	   <span style="color: red" ng-show=" mineForm.firstName.$dirty && mineForm.firstName.$invalid">
+       <span ng-show="mineForm.firstName.$error.requeried">用户名必填项</span>
+       </span>
+	</p>
+	<p>名：<input type="text" name="lastName" ng-model="lastName" required>
+	   <span style="color: red" ng-show="mineForm.lastName.$dirty && mineForm.lastName.$invalid"></span>
+       <span ng-show="mineForm.lastName.$error.requeried">用户名必填项</span>
+	</p>
+	<p>用户名：<input type="text" ng-model="user.userName">
+	</p>
+	<p>密码：<input type="password" ng-model="user.password"></p>
+     <button ng-click="submits()">提交</button>
+</form>
+用户信息： {{user}}
+复制：{{master}}
+<script type="text/javascript" src="../../js/common/angular1.3.9/js/angular.min.js"></script>
+
+<script type="text/javascript">
+
+  var formApp=angular.module('formApp',[]);
+  
+  formApp.controller('formCrl',function ($scope){
+	  $scope.master={userName:"admin",password:"admin"};
+	  $scope.submits=function (){
+		  $scope.user=angular.copy($scope.master);
+	  }
+	  $scope.submits();
+  });
+  
+  </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/showPage/common/common.jsp" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>物流管理系统</title>
+
+<link rel="stylesheet" type="text/css" href="${path}/resources/css/mng/model/admin_style.css" />
+<link rel="stylesheet" type="text/css" href="${path}/resources/css/mng/model/skins/tpphp.css" />
+
+
+<script src="${path}/resources/js/common/jquery-1.4.4.min.js"></script>
+<script src="${path}/resources/js/mng/index/main.js"></script>
+<script src="${path}/resources/js/mng/index/index.js"></script>
+<script src="${path}/resources/js/mng/index/artDialog.js"></script>
+<script src="${path}/resources/js/mng/usermng/usermng.js"></script>
+<script>
+	function openMsgWindow() {
+		
+		art.dialog({
+			id:'msgDialog',
+			title: '提示信息',
+			lock:false,
+			fixed:true,
+			width:300,
+			height:100,
+			ok: function(){
+				this.title('成功提示！').content('操作成功！').time(2);
+				return false;
+			 },
+			 cancel: function(){
+				
+				return true;
+			 },
+			content: "<div style='line-height:25px'>您有新的站内信<Br><a href=\"http://www.uimaker.com\">点此阅读</a></div>"
+		});
+	}
+</script>
+
+</head>
+<body style="overflow:hidden;">
+	<%@ include file="/WEB-INF/showPage/common/top.jsp"%>
+	
+	<div class="side_switch" id="side_switch">
+	</div>
+	<div class="side_switchl" id="side_switchl">
+	</div>
+	<div class="left">
+		<div class="member_info"><div class="member_ico">
+		<img src="${path}/resources/images/mng/model/a.png" width="43" height="43"></div>
+		<a class="system_a" href="">系统设置</a><a href="" class="system_log">注销</a>
+		<a href="${path}/mng/index/loginOut.rb" class="system_logout">退出</a>
+		</div>
+		<div class="left_title">常用功能操作</div>
+		<ul class="side">
+			<li><a href="#"  class="selected">网站栏目管理</a></li>
+			<li><a href="#">我发布的订单</a></li>
+			<li><a href="#">评论管理</a></li>
+			<li><a href="#">内容回收站</a></li>
+		</ul>
+		<ul class="side catsub">
+			<li class="feed"><a href="http://www.redbanner.icoc.in/" target="_blank">网站订阅查看</a></li>
+			<li class="side_about"><a href="http://www.redbanner.icoc.in/" target="_blank">版权声明</a></li>
+		</ul>
+	</div>
+	<div class="right" style=" background-image:url(../../resources/images/mng/login/background.png);">
+	<%-- <iframe style="OVERFLOW: visible" id="main" name="main" src="${path}/mng/index/main.rb" frameBorder=0 width="100%" scrolling="yes" height="100%"></iframe> --%>
+		<img alt="" src="../../resources/images/mng/login/background.png">
+	</div>
+</body>
+</html>

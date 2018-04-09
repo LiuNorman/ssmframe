@@ -1,0 +1,56 @@
+package com.function.message.mq;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map.Entry;
+
+import org.apache.activemq.command.ActiveMQTopic;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
+
+import com.botech.kits.thirdpart.shortmsg.SendMessageStub.SendMessages;
+import com.botech.qdgakk.base.entity.DistriUser;
+import com.botech.qdgakk.common.Constants;
+import com.botech.qdgakk.common.MQCacheQueue;
+import com.botech.qdgakk.communication.Adapter2WebEntity;
+import com.botech.qdgakk.communication.RealTimeDistri2MQ;
+import com.botech.qdgakk.communication.RealTimePass2MQ;
+import com.botech.qdgakk.distriInfo.service.DistriUserService;
+import com.botech.qdgakk.utils.JsonUtil;
+import com.botech.qdgakk.vehicleInfo.service.DistriCarService;
+
+/**
+ * MQ消息接收类
+ * 
+ * @author 当归
+ * @version 2014-12-15
+ */
+public class MQConsumer {
+	
+	static final Logger log = LoggerFactory.getLogger(MQConsumer.class);
+	
+	// 消息模板
+	@Autowired
+	private JmsTemplate jmsTemplate;
+	
+	
+
+	
+	/**
+	 * 接收方法
+	 * 
+	 * @param message 消息
+	 */
+	public void receive(String message) {
+	
+		try {
+
+			
+		} catch (Exception ex) {
+			log.error(ex.getMessage());
+		}
+	}
+}

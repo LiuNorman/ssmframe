@@ -1,0 +1,12 @@
+
+<div class="paging">
+	<ul class="pagination">
+	  <li><a onclick="pagination(5)">&laquo;</a></li>
+	  <li ><a onclick="pagination(1)">1</a></li>
+	  <li><a onclick="pagination(2)">2</a></li><!-- class="disabled" -->
+	  <li><a onclick="pagination(3)">3</a></li>
+	  <li><a onclick="pagination(4)">4</a></li>
+	  <li><a onclick="pagination(5)">5</a></li>
+	  <li><a onclick="pagination(1)">&raquo;</a></li>
+	</ul>	
+</div>

@@ -1,0 +1,521 @@
+/*package com.function.message.mq;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import javax.transaction.TransactionManager;
+import org.infinispan.Cache;
+import org.infinispan.manager.CacheContainer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+*//**
+ * 平台与MQ通信缓存队列
+ *
+ * @author 当归
+ * @version 2014-12-17
+ *//*
+public class MQCacheQueue {
+	
+	static final Logger log = LoggerFactory.getLogger(MQConsumer.class);
+
+	@Resource
+	private CacheContainer cacheContainer;
+	
+	private Cache<String, String> sessionMap;
+	
+	private Cache<String, ArrayList<PassCarInfo>> realTimePass;
+	
+	
+	private Cache<String, ArrayList<PassCarInfo>> distriAlarm;
+  
+	private Cache<String,Map<String,Object>> sessionCache;
+	
+	@PostConstruct
+	public void start(){
+		sessionMap = cacheContainer.getCache("sessionMap");
+		realTimePass = cacheContainer.getCache("realTimePass");
+		realTimeDistri = cacheContainer.getCache("realTimeDistri");
+		distriAlarm = cacheContainer.getCache("distriAlarm");
+		sessionCache = cacheContainer.getCache("sessionCache");
+	}
+     *//**
+      * 往sessionCache中添加一个会话信息
+      * @param sid  cacheSessionID
+      * @param map  会话信息
+      *//*
+	public void putSessionCache(String sid,Map<String,Object> map){
+	     Map<String, Object> a = sessionCache.put(sid, map);
+	}
+	
+	*//**
+	 * 移除sessionCache中的一条会话信息
+	 * @param sid  cacheSessionID 
+	 *//*
+	public void rmvSessionCache(String sid){
+		sessionCache.evict(sid);
+	}
+	
+	
+	*//**
+	 * sessionMap中添加一个会话信息
+	 * 
+	 * @param sid 		会话ID
+	 * @param policeNum 警号
+	 * @param dept 		部门编号
+	 * @param showType 	报警方式(私有、部门、公开)
+	 * @param alarm 	布控类型 (_type1_type2_type3_)
+	 *//*
+	public  void putSessionMap(String sid, String policeNum, String dept, String showType, String alarm){
+		
+		// 方便MQ接收时信息过滤
+		if (!alarm.startsWith("_")) {
+			alarm = "_" + alarm;
+		}
+		if (!alarm.endsWith("_")) {
+			alarm += "_";
+		}
+		TransactionManager tm  = getSessionMap().getAdvancedCache().getTransactionManager();
+		try {
+			tm.begin();
+			getSessionMap().put(sid, policeNum + "#" + dept + "#" + showType + "#" + alarm);
+		    
+		 } catch (Exception e) {
+			// TODO Auto-generated catch block
+			log.error("",e);
+		    try {
+				tm.rollback();
+			} catch (Exception e1) {
+				log.error("",e1);
+			}
+		 }finally{
+			 try {
+				tm.commit();
+			} catch (Exception e) {
+			    log.error("",e);
+			} 
+		 }
+		 
+		}
+	
+	*//**
+	 * 删除sessionMap中的一个会话信息
+	 * 
+	 * @param sid 会话ID
+	 *//*
+	public  void rmvSessionMap(String sid){
+		TransactionManager tm  = getSessionMap().getAdvancedCache().getTransactionManager();
+		try {
+			tm.begin();
+			getSessionMap().evict(sid);
+		    
+		 } catch (Exception e) {
+			// TODO Auto-generated catch block
+			log.error("",e);
+		    try {
+				tm.rollback();
+			} catch (Exception e1) {
+				log.error("",e1);
+			}
+		 }finally{
+			 try {
+				tm.commit();
+			} catch (Exception e) {
+			    log.error("",e);
+			} 
+			
+		 }
+			
+		
+	}
+	
+	
+	*//**
+	 * 取得队列中的实时过车监控数据
+	 * 
+	 * @param sid 会话ID
+	 * 
+	 * @return 队列中最顶层的数据，没有数据时返回null
+	 *//*
+	public  List<PassCarInfo> getRealTimePass(String sid){
+		   ArrayList<PassCarInfo> list = null;
+		   TransactionManager tm  = getRealTimePass().getAdvancedCache().getTransactionManager();
+			try {
+				tm.begin();
+				getRealTimePass().getAdvancedCache().lock(sid);
+				
+				if(getRealTimePass().size() < 1 || getRealTimePass().get(sid) == null){
+					return null;
+				}
+				
+				list = (ArrayList<PassCarInfo>)getRealTimePass().get(sid).clone();
+					
+				getRealTimePass().put(sid, new ArrayList<PassCarInfo>());
+             } catch (Exception e) {
+		
+				log.error("",e);
+			    try {
+					tm.rollback();
+				} catch (Exception e1) {
+					log.error("",e1);
+				}
+			 }finally{
+				 try {
+					tm.commit();
+				} catch (Exception e) {
+				     log.error("",e);
+				}
+			}
+		return list;
+	}
+	
+	*//**
+	 * 实时过车监控数据存入缓存队列
+	 * 
+	 * @param sid 会话ID
+	 * @param passCarInfo MQ上接收到的实时过车监控数据
+	 *//*
+	public  void putRealTimePass(String sid, PassCarInfo passCarInfo) {
+			ArrayList<PassCarInfo> linkedQueue;
+		
+			TransactionManager tm  = getRealTimePass().getAdvancedCache().getTransactionManager();
+			try {
+				tm.begin();
+				// 消息队列已经存在，则直接取得，否则生成一个新的消息队列
+				getRealTimePass().getAdvancedCache().lock(sid);
+				if(getRealTimePass().get(sid)!=null){
+					linkedQueue = getRealTimePass().get(sid);
+					// 如果队列中元素已到达上限，则删除最顶层元素。
+					if(linkedQueue.size() >= Constants.INQUEUE_SIZE){
+						linkedQueue.remove(0);
+					}
+				}else{
+					linkedQueue = new ArrayList<PassCarInfo>();
+				}
+				linkedQueue.add(passCarInfo);
+				getRealTimePass().put(sid, linkedQueue);
+			    
+			 } catch (Exception e) {
+				log.error("",e);
+			    try {
+					tm.rollback();
+				} catch (Exception e1) {
+					log.error("",e);
+				}
+			 }finally{
+				 try {
+					tm.commit();
+				} catch (Exception e) {
+				    log.error("",e);
+				}
+				}	
+	
+	}
+	
+	*//**
+	 * 清空缓存队列中的实时过车监控数据
+	 * 
+	 * @param sid 会话ID
+	 *//*
+	public  void rmvRealTimePass(String sid) {
+		// 如果缓存队列中存在相应sid的数据，则清除
+			if (getRealTimePass().containsKey(sid)) {
+				TransactionManager tm  = getRealTimePass().getAdvancedCache().getTransactionManager();
+				try {
+					tm.begin();
+					getRealTimePass().evict(sid);
+				 
+				 } catch (Exception e) {
+					// TODO Auto-generated catch block
+					log.error("",e);
+				    try {
+						tm.rollback();
+					} catch (Exception e1) {
+						log.error("",e);
+					}
+			    }finally{
+			    	try {
+						tm.commit();
+					} catch (Exception e) {
+					    log.error("",e);
+					} 
+			    }	
+				
+			}
+	
+	}
+	
+	*//**
+	 * 取得队列中实时报警监控数据
+	 * 
+	 * @param sid 会话ID
+	 * 
+	 * @return 队列中最顶层的数据，没有数据时返回null
+	 *//*
+	public  List<PassCarInfo> getRealTimeDistri(String sid){
+		   ArrayList<PassCarInfo> list = null;
+			
+		   TransactionManager tm  = getRealTimeDistri().getAdvancedCache().getTransactionManager();
+			try {
+				tm.begin();
+				getRealTimeDistri().getAdvancedCache().lock(sid);
+				// 如果队列中没有数据，则直接返回null
+				if(getRealTimeDistri().size() < 1 || getRealTimeDistri().get(sid) == null){
+					return null;
+				}	
+				
+				list = (ArrayList<PassCarInfo>)getRealTimeDistri().get(sid).clone();
+				getRealTimeDistri().put(sid, new ArrayList<PassCarInfo>());
+				
+			 
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				log.error("",e);
+			    try {
+					tm.rollback();
+				} catch (Exception e1) {
+					log.error("",e);
+				}
+			 }finally{
+				 
+				 try {
+					tm.commit();
+				} catch (Exception e) {
+				    log.error("", e);
+				}
+			 }	
+		
+		// 返回队列中的数据
+		return list;
+	}
+	
+	*//**
+	 * 实时报警监控数据存入缓存队列
+	 * 
+	 * @param sid 会话ID
+	 * @param passCarInfo MQ上接收到的实时报警监控数据
+	 *//*
+	public  void putRealTimeDistri(String sid, PassCarInfo passCarInfo) {
+		ArrayList<PassCarInfo> linkedQueue;
+		
+			TransactionManager tm  = getRealTimeDistri().getAdvancedCache().getTransactionManager();
+			try {
+				tm.begin();
+				
+                getRealTimeDistri().getAdvancedCache().lock(sid);
+				// 消息队列已经存在，则直接取得，否则生成一个新的消息队列
+				if(getRealTimeDistri().containsKey(sid)){
+					linkedQueue = getRealTimeDistri().get(sid);
+				}else{
+					linkedQueue = new ArrayList<PassCarInfo>();
+				}
+				// 如果队列中元素已到达上限，则删除最顶层元素。
+				if(linkedQueue.size() >= Constants.INQUEUE_SIZE){
+					linkedQueue.remove(0);
+				}
+				
+				linkedQueue.add(passCarInfo);
+		 
+				getRealTimeDistri().put(sid, linkedQueue);
+			    
+			 } catch (Exception e) {
+					log.error("",e);
+			    try {
+					tm.rollback();
+				} catch (Exception e1) {
+					log.error("",e1);
+				}
+			 }finally{
+				 try {
+					tm.commit();
+				} catch (Exception e) {
+				     log.error("",e);
+				} 
+			 }	
+		}
+	
+	*//**
+	 * 清空缓存队列中的实时报警监控数据
+	 * 
+	 * @param sid 会话ID
+	 *//*
+	public  void rmvRealTimeDistri(String sid) {
+		// 如果缓存队列中存在相应sid的数据，则清除
+
+			if (getRealTimeDistri().containsKey(sid)) {
+				TransactionManager tm  = getRealTimeDistri().getAdvancedCache().getTransactionManager();
+				try {
+					tm.begin();
+					getRealTimeDistri().evict(sid);
+				 } catch (Exception e) {
+					// TODO Auto-generated catch block
+					log.error("",e);
+				    try {
+						tm.rollback();
+					} catch (Exception e1) {
+						log.error("",e1);
+					}
+				 
+				 }finally{
+					   try {
+						tm.commit();
+					} catch (Exception e) {
+					    log.error("",e);
+					}	
+				 }	
+				
+			}
+	}
+	
+	*//**
+	 * 取得队列中的布控报警数据
+	 * 
+	 * @param sid 会话ID
+	 * 
+	 * @return 队列中最顶层的数据，没有数据时返回null
+	 *//*
+	public  List<PassCarInfo> getDistriAlarm(String sid){
+		    ArrayList<PassCarInfo> list = null;
+			TransactionManager tm  = getDistriAlarm().getAdvancedCache().getTransactionManager();
+			try {
+				tm.begin();
+				getDistriAlarm().getAdvancedCache().lock(sid);
+				// 如果队列中没有数据，则直接返回null
+				if(getDistriAlarm().size() < 1 || getDistriAlarm().get(sid) == null){
+					return null;
+				}
+				
+				list = (ArrayList<PassCarInfo>)getDistriAlarm().get(sid).clone();
+				
+				// 清空缓存队列
+				getDistriAlarm().put(sid, new ArrayList<PassCarInfo>());
+         	 
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				log.error("",e);
+			    try {
+					tm.rollback();
+				} catch (Exception e1) {
+					log.error("",e1);
+				}
+			 }finally{
+				 try {
+					tm.commit();
+				} catch (Exception e) {
+					log.error("",e);
+				} 
+			 }	
+			
+		
+		
+		 
+		// 返回队列中的数据
+		return list;
+	}
+	
+	*//**
+	 * 布控报警数据存入缓存队列
+	 * 
+	 * @param sid    会话ID
+	 * @param passCarInfo MQ上接收到的布控报警数据
+	 *//*
+	public  void putDistriAlarm(String sid, PassCarInfo passCarInfo) {
+		
+			ArrayList<PassCarInfo> linkedQueue;
+			
+			TransactionManager tm  = getDistriAlarm().getAdvancedCache().getTransactionManager();
+			
+			try {
+				tm.begin();
+				getDistriAlarm().getAdvancedCache().lock(sid);
+				// 消息队列已经存在，则直接取得，否则生成一个新的消息队列
+				if(getDistriAlarm().containsKey(sid)){
+					linkedQueue = getDistriAlarm().get(sid);
+				}else{
+					linkedQueue = new ArrayList<PassCarInfo>();
+				}
+				
+				// 如果队列中元素已到达上限，则删除最顶层元素。
+				if(linkedQueue.size() >= Constants.INQUEUE_SIZE){
+					linkedQueue.remove(0);
+				}
+				
+				// 加入队列中
+				linkedQueue.add(passCarInfo);
+				
+				getDistriAlarm().put(sid, linkedQueue);
+			    
+			 } catch (Exception e) {
+				// TODO Auto-generated catch block
+				log.error("",e);
+			    try {
+					tm.rollback();
+				} catch (Exception e1) {
+					log.error("",e);
+				}
+			    
+			 }finally{
+				 try {
+					tm.commit();
+				} catch (Exception e) {
+				    log.error("",e);
+				}
+			}
+			 
+			
+	}
+	
+	*//**
+	 * 清空缓存队列中的布控报警数据
+	 * 
+	 * @param sid 会话ID
+	 *//*
+	public  void rmvDistriAlarm(String sid){
+		// 如果缓存队列中存在相应sid的数据，则清除
+		if(this.getDistriAlarm().containsKey(sid)){
+			TransactionManager tm  = this.getDistriAlarm().getAdvancedCache().getTransactionManager();
+			try {
+				tm.begin();
+				this.getDistriAlarm().evict(sid);
+			    
+			 } catch (Exception e) {
+				// TODO Auto-generated catch block
+				log.error("",e);
+			    try {
+					tm.rollback();
+				} catch (Exception e1) {
+					log.error("",e);
+				}
+			 }finally{
+				 
+				 try {
+					tm.commit();
+				} catch (Exception e) {
+				    log.error("",e);
+				} 
+			 }
+				
+			}
+	}
+
+	public Cache<String, String> getSessionMap() {
+		return sessionMap;
+	}
+
+	public Cache<String, ArrayList<PassCarInfo>> getRealTimePass() {
+		return realTimePass;
+	}
+	
+	public Cache<String, ArrayList<PassCarInfo>> getRealTimeDistri() {
+		return realTimeDistri;
+	}
+
+	public Cache<String, ArrayList<PassCarInfo>> getDistriAlarm() {
+		return distriAlarm;
+	}
+	public Cache<String, Map<String, Object>> getSessionCache() {
+		return sessionCache;
+	}
+}*/

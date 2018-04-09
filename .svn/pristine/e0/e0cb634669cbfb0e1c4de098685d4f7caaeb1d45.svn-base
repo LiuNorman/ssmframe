@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../../js/common/angular1.3.9/js/angular.min.js"></script>
+</head>
+<body>
+<form ng-app="" name ="mineForm" novalidate>
+ ng-app="" 如果有名字的话就必须的声明 var app=。。。。。。。
+	<p>姓：
+	<input type="text" ng-model="firstName" name="firstName" required>
+	<span style="color: red" ng-show="mineForm.firstName.$dirty && mineForm.firstName.$invalid">
+	<span ng-show="mineForm.firstName.$error.required">用户名必填项</span>
+	</span>
+	</p>
+	<p>名：<input type="text" name="lastName" ng-model="lastName" required>
+	   <span style="color: red" ng-show="mineForm.lastName.$dirty && mineForm.lastName.$invalid"></span>
+       <span ng-show="mineForm.lastName.$error.required">用户名必填项</span>
+	</p>
+	<input type="submit" value="提交" ng-disabled="mineForm.firstName.$dirty && mineForm.firstName.$invalid || mineForm.lastName.$dirty && mineForm.lastName.$invalid">
+	</form>
+
+</body>
+</html>

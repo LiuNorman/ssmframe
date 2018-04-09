@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.frame.base.mapper.UserMapper">
+	<resultMap id="BaseResultMap" type="com.frame.base.entity.UserInfo">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="cardID" property="cardID" jdbcType="VARCHAR" />
+		<result column="userName" property="userName" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="age" property="age" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="plateNumber" property="plateNumber" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="createTime" property="createTime" jdbcType="DATE" />
+		<result column="updateTime" property="updateTime" jdbcType="DATE" />
+		<result column="userStatus" property="userStatus" jdbcType="VARCHAR" />
+		<result column="roleId" property="roleId" jdbcType="INTEGER" />
+		<result column="userMoney" property="userMoney" jdbcType="VARCHAR" />
+		<result column="makeMoney" property="makeMoney" jdbcType="VARCHAR" />
+		<result column="consumption" property="consumption" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,cardID, userName, password, age,phone,phone,address,createTime,updateTime,userStatus,roleId,userMoney,makeMoney,consumption
+	</sql>
+	
+	<!-- 根据用户id查询用户 -->
+	<select id="getUserById" resultMap="BaseResultMap" parameterType="INTEGER">
+		select  id,cardID, userName, password,
+		age,phone,address,
+		createTime,updateTime,
+		userStatus,roleId,userMoney,
+		makeMoney,consumption 
+		 from t_user_info 
+		<where>
+			<if test="id !=null and id!=''">
+				id=#{id,jdbcType=INTEGER}			
+			</if>
+		</where>
+		
+	</select>
+	
+	<!-- 根据用户id查询用户 -->
+	<select id="loginValidate" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+		select  id,cardID, userName, password,
+		age,phone,address,
+		createTime,updateTime,
+		userStatus,roleId,userMoney,
+		makeMoney,consumption 
+		 from t_user_info 
+		<where>
+			userStatus !=2
+			<if test="userName !=null and userName!=''">
+				and userName=#{userName,jdbcType=VARCHAR}			
+			</if>
+			<if test="password !=null and password!=''">
+				and password=#{password,jdbcType=VARCHAR}			
+			</if>
+		</where>
+		
+	</select>
+	
+	<select id="getUsers" resultMap="BaseResultMap">
+		select  
+		id,cardID, userName, password,
+		age,phone,address,
+		createTime,updateTime,
+		userStatus,roleId,userMoney,
+		makeMoney,consumption  
+		from t_user_info
+		
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_user_info
+		where id = #{
+		id,jdbcType=INTEGER
+		}
+	</select>
+	<select id="isOnlyUser" resultType="int">
+		select
+		count(t.id)
+		from t_user_info t
+		where t.userName = #{
+		userName,jdbcType=VARCHAR
+		}
+	</select>
+	
+	<delete id="deleteUser" parameterType="java.lang.Integer">
+		delete from t_user_info
+		where id = #{
+		id,jdbcType=INTEGER
+		}
+	</delete>
+	
+	<insert id="addUser" parameterType="com.frame.base.entity.UserInfo">
+	insert into t_user_info (
+		id,cardID, userName, password,
+		age,phone,address,
+		createTime,updateTime,
+		userStatus,roleId,userMoney,
+		makeMoney,consumption)
+		values (#{
+		id,jdbcType=INTEGER
+		}, #{
+		cardID,jdbcType=VARCHAR
+		}, #{
+		userName,jdbcType=VARCHAR
+		}, #{
+		password,jdbcType=VARCHAR
+		},
+		#{
+		age,jdbcType=VARCHAR
+		}, #{
+		phone,jdbcType=VARCHAR
+		}, #{
+		address,jdbcType=VARCHAR
+		}, #{
+		createTime,jdbcType=DATE
+		}, #{
+		updateTime,jdbcType=DATE
+		},#{
+		userStatus,jdbcType=VARCHAR
+		},#{
+		roleId,jdbcType=INTEGER
+		},#{
+		userMoney,jdbcType=VARCHAR
+		},#{
+		makeMoney,jdbcType=VARCHAR
+		},#{
+		consumption,jdbcType=VARCHAR
+		}
+
+	)
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.frame.base.entity.UserInfo">
+		insert into t_user_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userName != null">
+				userName,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="age != null">
+				age,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{
+				id,jdbcType=INTEGER
+				},
+			</if>
+			<if test="userName != null">
+				#{
+				userName,jdbcType=VARCHAR
+				},
+			</if>
+			<if test="password != null">
+				#{
+				password,jdbcType=VARCHAR
+				},
+			</if>
+			<if test="age != null">
+				#{
+				age,jdbcType=INTEGER
+				},
+			</if>
+		</trim>
+	</insert>
+	
+	
+	<update id="editUser" parameterType="com.frame.base.entity.UserInfo">
+		update t_user_info
+		<set>
+			<if test="userName != null and  userName !=''">
+				userName = #{
+				userName,jdbcType=VARCHAR
+				},
+			</if>
+			<if test="password != null and  password !=''">
+				password = #{
+				password,jdbcType=VARCHAR
+				},
+			</if>
+			<if test="cardID != null and  cardID !=''">
+				cardID = #{
+				cardID,jdbcType=VARCHAR
+				},
+			</if>
+			<if test="age != null and  age !=''">
+				age = #{
+				age,jdbcType=INTEGER
+				},
+			</if>
+			<if test="phone != null and  phone !=''">
+				phone = #{
+				phone,jdbcType=VARCHAR
+				},
+			</if>
+			<if test="address != null and  address !=''">
+				address = #{
+				address,jdbcType=VARCHAR
+				},
+			</if>
+		
+			
+		</set>
+		where id = #{ id,jdbcType=INTEGER }
+	</update>
+	
+	
+</mapper>

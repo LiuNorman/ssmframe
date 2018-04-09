@@ -1,0 +1,59 @@
+//分页处理js文件
+
+//查询分页的总数
+var paginationCount;
+function paginationCount(url){
+	
+	$.ajax({
+		url:url,
+		data:{},
+		success:function(data){
+			//
+			paginationCount=data;
+		}
+	});
+	
+}
+
+
+//分页上一页。下一页请求
+function pagination(url,start,end){
+	
+}
+
+//点击下一页 上一页 请求分页
+function pagination(next,pageCount){
+	var url=$("#pagination").attr("url");
+	var orderName='';
+	if(next>=0){
+		var start=(next-1)*pageCount;
+	}else{
+		start=0;
+	}
+	 $.ajax({
+ 		url:url,
+ 		data:{
+ 			'select':orderName,
+ 			'start':start,
+ 			'page':pageCount
+ 		},
+ 		//type:'post',
+ 		success:function(data){
+ 			refresh();
+ 			
+ 		},
+ 		error: function(data){
+ 			
+ 			var str="";
+ 			
+ 			 $.each(data,function(n,value) { 
+ 				 
+ 				 str=str+"n:"+n+".value:"+value;   
+ 				                   
+ 			 });   
+ 				  
+ 			BootstrapDialog.alert(str+"请求失败！");
+ 			
+ 		}
+ 	});
+}

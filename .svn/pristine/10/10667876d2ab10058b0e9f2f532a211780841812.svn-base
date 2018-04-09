@@ -1,0 +1,274 @@
+package com.function.message.mq;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import javax.transaction.TransactionManager;
+
+import org.infinispan.Cache;
+import org.infinispan.manager.CacheContainer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.frame.base.entity.OrderInfo;
+import com.frame.common.Constants;
+
+
+/**
+ * 平台与MQ通信缓存队列
+ *
+ * @author Norman
+ * @version 2016年3月30日19:56:58
+ */
+public class MQCacheQueue {
+	
+	/*static final Logger log = LoggerFactory.getLogger(MQConsumer.class);
+
+	//@Resource
+	private CacheContainer cacheContainer;
+	
+	private Cache<String, String> sessionMap;
+	
+	private Cache<String, ArrayList<OrderInfo>> orderInfo;
+	
+  
+	private Cache<String,Map<String,Object>> sessionCache;
+	
+	//@PostConstruct
+	public void start(){
+		
+		sessionMap = cacheContainer.getCache("sessionMap");
+		orderInfo = cacheContainer.getCache("orderInfo");
+		sessionCache = cacheContainer.getCache("sessionCache");
+		
+	}
+     *//**
+      * 往sessionCache中添加一个会话信息
+      * @param sid  cacheSessionID
+      * @param map  会话信息
+      *//*
+	public void putSessionCache(String sid,Map<String,Object> map){
+	
+	     Map<String, Object> a = sessionCache.put(sid, map);
+	}
+	
+	*//**
+	 * 移除sessionCache中的一条会话信息
+	 * @param sid  cacheSessionID 
+	 *//*
+	public void rmvSessionCache(String sid){
+		sessionCache.evict(sid);
+	}
+	
+	
+	*//**
+	 * sessionMap中添加一个会话信息
+	 * 
+	 * @param sid 		会话ID
+	 *//*
+	public  void putSessionMap(String sid, int userId, String cardID,int roleId){
+		
+		// 方便MQ接收时信息过滤
+		
+		TransactionManager tm  = getSessionMap().getAdvancedCache().getTransactionManager();
+		try {
+			tm.begin();
+			getSessionMap().put(sid,  userId + "#" + cardID + "#" + roleId);
+		    
+		 } catch (Exception e) {
+			// TODO Auto-generated catch block
+			log.error("",e);
+			
+		    try {
+				tm.rollback();
+			} catch (Exception e1) {
+				log.error("",e1);
+			}
+		    
+		 }finally{
+			 
+			 try {
+				 
+				tm.commit();
+				
+			} catch (Exception e) {
+				
+			    log.error("",e);
+			    
+			} 
+		 }
+		 
+		}
+	
+	*//**
+	 * 删除sessionMap中的一个会话信息
+	 * 
+	 * @param sid 会话ID
+	 *//*
+	public  void rmvSessionMap(String sid){
+		
+		TransactionManager tm  = getSessionMap().getAdvancedCache().getTransactionManager();
+		
+		try {
+			tm.begin();
+			getSessionMap().evict(sid);
+		    
+		 } catch (Exception e) {
+			// TODO Auto-generated catch block
+			log.error("",e);
+			
+		    try {
+				tm.rollback();
+			} catch (Exception e1) {
+				log.error("",e1);
+			}
+		    
+		 }finally{
+			 try {
+				tm.commit();
+			} catch (Exception e) {
+			    log.error("",e);
+			} 
+			
+		 }
+			
+		
+	}
+	
+	
+	*//**
+	 * 取得队列中的实时订单数据
+	 * 
+	 * @param sid 会话ID
+	 * 
+	 * @return 队列中最顶层的数据，没有数据时返回null
+	 *//*
+	public  List<OrderInfo> getOrderInfo(String sid){
+		
+	   ArrayList<OrderInfo> list = null;
+	   
+	   TransactionManager tm  = getOrderInfo().getAdvancedCache().getTransactionManager();
+		try {
+			tm.begin();
+			getOrderInfo().getAdvancedCache().lock(sid);
+			
+			if(getOrderInfo().size() < 1 || getOrderInfo().get(sid) == null){
+				return null;
+			}
+			
+			list = (ArrayList<OrderInfo>)getOrderInfo().get(sid).clone();
+				
+			getOrderInfo().put(sid, new ArrayList<OrderInfo>());
+         } catch (Exception e) {
+	
+			log.error("",e);
+		    try {
+				tm.rollback();
+			} catch (Exception e1) {
+				log.error("",e1);
+			}
+		 }finally{
+			 try {
+				tm.commit();
+			} catch (Exception e) {
+			     log.error("",e);
+			}
+		}
+		
+		return list;
+	}
+	
+	*//**
+	 * 订单控数据存入缓存队列
+	 * 
+	 * @param sid 会话ID
+	 * @param orderInfo MQ上接收到的实时过车监控数据
+	 *//*
+	public  void putOrderInfo(String sid, OrderInfo orderInfo) {
+			ArrayList<OrderInfo> linkedQueue;
+		
+			TransactionManager tm  = getOrderInfo().getAdvancedCache().getTransactionManager();
+			try {
+				tm.begin();
+				// 消息队列已经存在，则直接取得，否则生成一个新的消息队列
+				getOrderInfo().getAdvancedCache().lock(sid);
+				if(getOrderInfo().get(sid)!=null){
+					linkedQueue = getOrderInfo().get(sid);
+					
+					// 如果队列中元素已到达上限，则删除最顶层元素。
+					if(linkedQueue.size() >= Constants.INQUEUE_SIZE){
+						linkedQueue.remove(0);
+					}
+				}else{
+					linkedQueue = new ArrayList<OrderInfo>();
+				}
+				linkedQueue.add(orderInfo);
+				getOrderInfo().put(sid, linkedQueue);
+			    
+			 } catch (Exception e) {
+				log.error("",e);
+			    try {
+					tm.rollback();
+				} catch (Exception e1) {
+					log.error("",e);
+				}
+			 }finally{
+				 try {
+					tm.commit();
+				} catch (Exception e) {
+				    log.error("",e);
+				}
+				 
+				}	
+	
+	}
+	
+	*//**
+	 * 清空缓存队列中的实时过车监控数据
+	 * 
+	 * @param sid 会话ID
+	 *//*
+	public  void rmvRealTimePass(String sid) {
+		// 如果缓存队列中存在相应sid的数据，则清除
+			if (getOrderInfo().containsKey(sid)) {
+				TransactionManager tm  = getOrderInfo().getAdvancedCache().getTransactionManager();
+				try {
+					tm.begin();
+					getOrderInfo().evict(sid);
+				 
+				 } catch (Exception e) {
+					// TODO Auto-generated catch block
+					log.error("",e);
+				    try {
+						tm.rollback();
+					} catch (Exception e1) {
+						log.error("",e);
+					}
+			    }finally{
+			    	try {
+						tm.commit();
+					} catch (Exception e) {
+					    log.error("",e);
+					} 
+			    }	
+				
+			}
+	
+	}
+	
+	
+
+	public Cache<String, String> getSessionMap() {
+		return sessionMap;
+	}
+
+	public Cache<String, ArrayList<OrderInfo>> getOrderInfo() {
+		return orderInfo;
+	}
+	
+	public Cache<String, Map<String, Object>> getSessionCache() {
+		return sessionCache;
+	}*/
+}

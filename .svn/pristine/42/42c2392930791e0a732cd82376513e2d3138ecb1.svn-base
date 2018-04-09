@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.frame.base.mapper.OrderMapper">
+
+	<resultMap id="BaseResultMap" type="com.frame.base.entity.OrderInfo">
+
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="orderName" property="orderName" jdbcType="VARCHAR" />
+		<result column="customerId" property="customerId" jdbcType="INTEGER" />
+		<result column="courierId" property="courierId" jdbcType="INTEGER" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="createTime" property="createTime" jdbcType="DATE" />
+		<result column="updateTime" property="updateTime" jdbcType="DATE" />
+		<result column="orderStatus" property="orderStatus" jdbcType="VARCHAR" />
+		<result column="serviceTime" property="serviceTime" jdbcType="DATE" />
+		<result column="requireTime" property="requireTime" jdbcType="VARCHAR" />
+		<result column="orderDescription" property="orderDescription" jdbcType="VARCHAR" />
+		<result column="orderId" property="orderId" jdbcType="INTEGER" />
+		<result column="orderType" property="orderType" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="userOrderMap" type="com.frame.pojo.OrderInfoQO">
+
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="orderName" property="orderName" jdbcType="VARCHAR" />
+		<result column="customerId" property="customerId" jdbcType="INTEGER" />
+		<result column="courierId" property="courierId" jdbcType="INTEGER" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="createTime" property="createTime" jdbcType="DATE" />
+		<result column="updateTime" property="updateTime" jdbcType="DATE" />
+		<result column="orderStatus" property="orderStatus" jdbcType="VARCHAR" />
+		<result column="serviceTime" property="serviceTime" jdbcType="DATE" />
+		<result column="requireTime" property="requireTime" jdbcType="VARCHAR" />
+		<result column="orderDescription" property="orderDescription" jdbcType="VARCHAR" />
+		<result column="customerName" property="customerName" jdbcType="VARCHAR" />
+		<result column="courierName" property="courierName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,orderName, customerId, courierId, phone,address,createTime,
+		updateTime,orderStatus,serviceTime,requireTime,orderDescription
+	</sql>
+	
+	<select id="getOrderById" resultMap="BaseResultMap" parameterType="INTEGER">
+		select  id,orderName, customerId, courierId, phone,address,createTime,
+		updateTime,orderStatus,serviceTime,requireTime,orderDescription  from t_order_logistics
+		<where>
+			<if test="id!=null and id!=''">
+				id=#{id,jdbcType=INTEGER}			
+			</if>
+		</where>
+	</select>
+	
+	<!-- #{start,jdbcType=INTEGER} parameterType="hashMap"-->
+	<select id="getOrders" resultMap="userOrderMap"  parameterType="java.util.HashMap">
+		select orders.id,orders.orderName, orders.customerId, orders.courierId,orders.phone,orders.address,
+		orders.createTime, orders.updateTime,orders.orderStatus,orders.serviceTime,orders.requireTime,
+		orders.orderDescription,customer.userName customerName,courier.userName courierName 
+		from t_order_logistics orders left join  t_user_info customer  on  orders.customerId= customer.id
+		left join t_user_info courier on orders.courierId=courier.id
+		<where>
+				orderStatus != 2
+			<if test="pageBean.select !=null and pageBean.select !=''">
+				and orderName = #{pageBean.select,jdbcType=VARCHAR}
+			</if>
+				
+		</where>
+		order by createTime DESC
+		<if test="pageBean.start !=null and pageBean.start!=''">
+			limit #{pageBean.start,jdbcType=INTEGER}
+		</if>
+		<if test="pageBean.pageCount !=null and pageBean.pageCount!=''">
+			, #{pageBean.pageCount,jdbcType=INTEGER}
+		</if>
+	</select>
+	
+	<!-- #{start,jdbcType=INTEGER} parameterType="hashMap"-->
+	<select id="getOrdersById" resultMap="BaseResultMap"  parameterType="java.util.HashMap">
+		select id,orderName, customerId, courierId, phone,address,createTime,
+		updateTime,orderStatus,serviceTime,requireTime,orderDescription  
+		from t_order_logistics 
+		<where>
+				orderStatus != 2
+			<if test="id !=null and id !=''">
+				and customerId = #{id,jdbcType=INTEGER}
+			</if>
+				
+		</where>
+		order by createTime DESC
+		<if test="start !=null and start!=''">
+			limit #{start,jdbcType=INTEGER}
+		</if>
+		<if test="end !=null and end!=''">
+			, #{end,jdbcType=INTEGER}
+		</if>
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_order_logistics
+		where id = #{
+		id,jdbcType=INTEGER
+		}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_order_logistics
+		where id = #{ id,jdbcType=INTEGER }
+	</delete>
+	
+	<insert id="sendOrderLogistics" parameterType="com.frame.base.entity.OrderInfo">
+		insert into t_order_logistics (id, orderName,customerId, courierId, phone,address,createTime,updateTime,orderStatus,serviceTime,requireTime,orderDescription)
+		values (
+		#{id,jdbcType=INTEGER },
+		#{orderName,jdbcType=INTEGER },
+		#{customerId,jdbcType=INTEGER }, 
+		#{courierId,jdbcType=INTEGER },
+		#{phone,jdbcType=VARCHAR},
+		#{address,jdbcType=VARCHAR},
+		#{createTime,jdbcType=DATE},
+		#{updateTime,jdbcType=DATE},
+		#{orderStatus,jdbcType=VARCHAR},
+		#{serviceTime,jdbcType=DATE},
+		#{requireTime,jdbcType=VARCHAR},
+		#{orderDescription,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<insert id="sendOrderInfo" parameterType="com.frame.base.entity.OrderInfo">
+		insert into t_order_info (id, orderName,customerId, courierId, phone,address,createTime,updateTime,orderStatus,serviceTime,requireTime,orderDescription)
+		values (
+		#{id,jdbcType=INTEGER },
+		#{orderName,jdbcType=INTEGER },
+		#{customerId,jdbcType=INTEGER }, 
+		#{courierId,jdbcType=INTEGER },
+		#{phone,jdbcType=VARCHAR},
+		#{address,jdbcType=VARCHAR},
+		#{createTime,jdbcType=DATE},
+		#{updateTime,jdbcType=DATE},
+		#{orderStatus,jdbcType=VARCHAR},
+		#{serviceTime,jdbcType=DATE},
+		#{requireTime,jdbcType=VARCHAR},
+		#{orderDescription,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<insert id="sendOrderDetail" parameterType="com.frame.base.entity.OrderInfo">
+		insert into t_order_Detail (orderName,customerId, courierId, phone,address,
+		createTime,updateTime,orderStatus,serviceTime,requireTime,orderDescription,orderId,orderType)
+		values (
+		
+		#{orderName,jdbcType=VARCHAR },
+		#{customerId,jdbcType=INTEGER }, 
+		#{courierId,jdbcType=INTEGER },
+		#{phone,jdbcType=VARCHAR},
+		#{address,jdbcType=VARCHAR},
+		#{createTime,jdbcType=DATE},
+		#{updateTime,jdbcType=DATE},
+		#{orderStatus,jdbcType=VARCHAR},
+		#{serviceTime,jdbcType=DATE},
+		#{requireTime,jdbcType=VARCHAR},
+		#{orderDescription,jdbcType=VARCHAR},
+		#{orderId,jdbcType=INTEGER },
+		#{orderType,jdbcType=VARCHAR }
+		)
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.frame.base.entity.OrderInfo">
+		insert into t_order_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="orderName != null">
+				orderName,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="age != null">
+				age,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{
+				id,jdbcType=INTEGER
+				},
+			</if>
+			<if test="orderName != null">
+				#{
+				orderName,jdbcType=VARCHAR
+				},
+			</if>
+			<if test="password != null">
+				#{
+				password,jdbcType=VARCHAR
+				},
+			</if>
+			<if test="age != null">
+				#{
+				age,jdbcType=INTEGER
+				},
+			</if>
+		</trim>
+	</insert>
+	
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.frame.base.entity.OrderInfo">
+		update t_order_info
+		<set>
+			<if test="orderName != null">
+				orderName = #{
+				orderName,jdbcType=VARCHAR
+				},
+			</if>
+			<if test="orderStatus != null">
+				orderStatus = #{orderStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="serviceTime != null">
+				serviceTime = #{serviceTime,jdbcType=DATE},
+			</if>
+		</set>
+		where id = #{
+		id,jdbcType=INTEGER
+		}
+	</update>
+	
+	<!-- 接单 -->
+	<update id="reciveOrder" parameterType="com.frame.base.entity.OrderInfo">
+		update t_order_logistics
+		<set>
+			<if test="courierId != null and courierId!=''">
+				courierId = #{courierId,jdbcType=INTEGER},
+			</if>
+			<if test="orderStatus != null and orderStatus!=''">
+				orderStatus = #{orderStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="serviceTime != null and serviceTime!=''">
+				serviceTime = #{serviceTime,jdbcType=DATE},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER }
+	</update>
+	
+	<!-- 接单 -->
+	<update id="reciveOrderDetail" parameterType="com.frame.base.entity.OrderInfo">
+		update t_order_detail
+		<set>
+			<if test="courierId != null and courierId!=''">
+				courierId = #{courierId,jdbcType=INTEGER},
+			</if>
+			<if test="orderStatus != null and orderStatus!=''">
+				orderStatus = #{orderStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="serviceTime != null and serviceTime!=''">
+				serviceTime = #{serviceTime,jdbcType=DATE},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER }
+	</update>
+	
+	<update id="updateByPrimaryKey" parameterType="com.frame.base.entity.OrderInfo">
+		update t_order_logistics
+		set orderName = #{
+		orderName,jdbcType=VARCHAR
+		}
+		
+		where id = #{
+		id,jdbcType=INTEGER
+		}
+	</update>
+</mapper>

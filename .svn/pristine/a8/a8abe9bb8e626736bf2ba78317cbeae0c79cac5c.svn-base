@@ -1,0 +1,155 @@
+package com.frame.base.entity;
+
+import java.util.Date;
+
+/**
+ * 用户实体
+ * @author Norman
+ *
+ */
+public class UserInfo {
+	
+	private int id;
+	
+	private String cardID;
+	
+	private String userName;
+	private String account;
+	private String password;
+	private String age;
+	private String phone;
+	private String plateNumber;
+	private String address;
+	private String createTime;
+	private String updateTime;
+	private String userStatus;
+	private String roleId;
+	private String userMoney;
+	private String makeMoney;
+	private String consumption;
+	private String drivingLicenceImage;
+	private String validitycardID;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public String getCardID() {
+		return cardID;
+	}
+	public void setCardID(String cardID) {
+		this.cardID = cardID;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
+	public String getPlateNumber() {
+		return plateNumber;
+	}
+	public void setPlateNumber(String plateNumber) {
+		this.plateNumber = plateNumber;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
+	public String getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+	public String getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(String updateTime) {
+		this.updateTime = updateTime;
+	}
+	public String getUserStatus() {
+		return userStatus;
+	}
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
+	}
+	
+	
+	public String getUserMoney() {
+		return userMoney;
+	}
+	public void setUserMoney(String userMoney) {
+		this.userMoney = userMoney;
+	}
+	public String getMakeMoney() {
+		return makeMoney;
+	}
+	public void setMakeMoney(String makeMoney) {
+		this.makeMoney = makeMoney;
+	}
+	public String getConsumption() {
+		return consumption;
+	}
+	public void setConsumption(String consumption) {
+		this.consumption = consumption;
+	}
+	public String getDrivingLicenceImage() {
+		return drivingLicenceImage;
+	}
+	public void setDrivingLicenceImage(String drivingLicenceImage) {
+		this.drivingLicenceImage = drivingLicenceImage;
+	}
+	public String getAge() {
+		return age;
+	}
+	public void setAge(String age) {
+		this.age = age;
+	}
+	public String getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
+	}
+	/*public Date getValiditycardID() {
+		return validitycardID;
+	}
+	public void setValiditycardID(Date validitycardID) {
+		this.validitycardID = validitycardID;
+	}*/
+	public String getValiditycardID() {
+		return validitycardID;
+	}
+	public void setValiditycardID(String validitycardID) {
+		this.validitycardID = validitycardID;
+	}
+	public String getAccount() {
+		return account;
+	}
+	public void setAccount(String account) {
+		this.account = account;
+	}
+	
+	
+}

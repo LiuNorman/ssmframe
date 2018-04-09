@@ -1,0 +1,10 @@
+package com.frame.javabean;
+
+/**
+ * 分页
+ * @author NormanZone
+ *
+ */
+public class PageBean {
+
+}

@@ -1,0 +1,57 @@
+package com.function.message.mq;
+
+import org.apache.activemq.command.ActiveMQTopic;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
+
+import com.botech.qdgakk.common.Constants;
+
+/**
+ * ActiveMQ的消息生产者类
+ * 
+ * @author 当归
+ * @version 2014-3-4
+ */
+public class MQProducer {
+	// 消息模板
+	@Autowired
+	private JmsTemplate jmsTemplate;
+
+
+	/**
+	 * 消息发送的方法
+	 * 
+	 * @param dest 消息的topic
+	 * @param msg  消息的内容
+	 * @return true:发送成功；false:MQ发送时出现异常
+	 */
+	public boolean sendMsg(String dest, String msg) {
+		// 发送消息
+		try {
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	/**
+	 * 布控消息发送到框架
+	 * @param dest
+	 * @param msg
+	 * @return
+	 */
+	public boolean sendMessage(String dest, String msg) {
+		// 发送消息
+		try {
+			
+			
+			
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+}

@@ -1,0 +1,21 @@
+
+#------------ Template ------------
+template.encoding=UTF-8
+template.update_delay=3600
+template.number_format=0.######
+template.boolean_format=true,false
+template.datetime_format=yyyy-MM-dd HH:mm:ss
+template.date_format=yyyy-MM-dd
+template.time_format=HH:mm:ss
+template.loader_path=/WEB-INF/classes/template,classpath:/
+template.suffix=.ftl
+
+#AMQ.URL=failover\:(tcp\://10.49.128.2\:61616,tcp\://10.49.128.2\:61616)?randomize\=false&maxReconnectDelay\=30000&timeout\=3000
+AMQ.URL=failover:(tcp://192.168.1.117:61616,tcp://127.0.0.1:61616)?randomize=false&maxReconnectDelay=30000&timeout=3000
+AMQ.PRODUCER.TEST=REDBANNER.AMQ.TEST.TOPIC
+# MQ topic of distribute car 
+AMQ.PRODUCER=REDBANNER
+#new distriCar
+AMQ.PRODUCER=REDBANNER
+
+
