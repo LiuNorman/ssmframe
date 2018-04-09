@@ -96,11 +96,6 @@ public class LoginMngController {
 			modelAndView=new ModelAndView("mngPage/login/login");
 		}
 		
-
-		
-		
-		
-		
 		return  modelAndView;
 	}
 }
