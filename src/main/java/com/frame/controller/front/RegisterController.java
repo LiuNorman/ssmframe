@@ -33,7 +33,7 @@ public class RegisterController {
     @RequestMapping("register")
     public ModelAndView register() {
 
-        ModelAndView modelAndView = new ModelAndView("front/register/register");
+        ModelAndView modelAndView = new ModelAndView("frontPage/register/register");
         return modelAndView;
     }
 
@@ -43,7 +43,7 @@ public class RegisterController {
      */
     @RequestMapping("userRegister")
     public ModelAndView userRegister(UserInfo user) {
-        ModelAndView modelAndView = new ModelAndView("front/index/index");
+        ModelAndView modelAndView = new ModelAndView("frontPage/index/index");
 
         if (user == null) {
             modelAndView.addObject("message", FrontMessage.resultFail("参数未传入，请确认！"));

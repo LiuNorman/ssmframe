@@ -65,7 +65,8 @@ public class LoginController {
         if (user != null) {
             message.setCode("success");
             message.setMessage("登陆成功。");
-            message.setUrl("front/index/index");
+            message.setFlag(true);
+            message.setUrl("front/index/index.rb");
             return message;
         } else {
             message.setCode("error");

@@ -210,7 +210,7 @@ public class IndexController {
 		if(user!=null){
 			message.setCode("success");
 			message.setMessage("登陆成功。");
-			message.setUrl("mng/index/index.rb");
+			message.setUrl("index/index/index.rb");
 		}else{
 			message.setCode("error");
 			message.setMessage("登陆失败。");

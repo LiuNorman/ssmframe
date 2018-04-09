@@ -16,7 +16,7 @@ public class UserInfo {
 	private String userName;
 	private String account;
 	private String password;
-	private String age;
+	private Integer age;
 	private String phone;
 	private String plateNumber;
 	private String address;
@@ -120,12 +120,15 @@ public class UserInfo {
 	public void setDrivingLicenceImage(String drivingLicenceImage) {
 		this.drivingLicenceImage = drivingLicenceImage;
 	}
-	public String getAge() {
+
+	public Integer getAge() {
 		return age;
 	}
-	public void setAge(String age) {
+
+	public void setAge(Integer age) {
 		this.age = age;
 	}
+
 	public String getRoleId() {
 		return roleId;
 	}
