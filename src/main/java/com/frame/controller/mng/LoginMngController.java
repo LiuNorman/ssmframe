@@ -30,7 +30,19 @@ public class LoginMngController {
 	
 	@Autowired
 	private UserService userService;
-	
+
+	/**
+	 * 功能：登陆功能
+	 *
+	 * 参数：@return
+	 */
+	@RequestMapping("login")
+	public ModelAndView login(){
+
+
+		return new ModelAndView("mngPage/login/login");
+
+	}
 	/**
 	 * 编辑人：Norman
 	 *
@@ -96,6 +108,23 @@ public class LoginMngController {
 			modelAndView=new ModelAndView("mngPage/login/login");
 		}
 		
+		return  modelAndView;
+	}
+
+	/**
+	 * 编辑人：Norman
+	 *
+	 * 功能：获取所有用户 测试方法
+	 *
+	 * 时间：2015年12月22日
+	 * @return
+	 */
+	@RequestMapping("loginOut")
+	@ResponseBody
+	public ModelAndView loginOut(HttpServletRequest request) {
+
+		ModelAndView modelAndView=new ModelAndView("mngPage/index/index");
+		request.getSession().removeAttribute("userInfo");
 		return  modelAndView;
 	}
 }

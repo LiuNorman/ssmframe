@@ -28,6 +28,17 @@ public class LoginController {
     private UserService userService;
 
     /**
+     * 功能：登陆功能
+     *
+     * 参数：@return
+     */
+    @RequestMapping("login")
+    public ModelAndView login(){
+
+
+        return new ModelAndView("frontPage/login/login");
+    }
+    /**
      * 编辑人：Norman
      * <p>
      * 功能：获取所有用户 测试方法
@@ -111,4 +122,6 @@ public class LoginController {
             return modelAndView;
         }
     }
+
+
 }

@@ -47,18 +47,7 @@ public class IndexMngController {
 	@Autowired
 	private OrderService orderService;
 
-	 /**
-     * 功能：登陆功能 
-     * 
-     * 参数：@return
-     */
-    @RequestMapping("login")  
-    public ModelAndView login(){
-    	
-    	 
-    	return new ModelAndView("mngPage/login/login");
-    	
-    }
+
     
 	/**
 	 * 编辑人：Norman
@@ -132,57 +121,7 @@ public class IndexMngController {
 		return  modelAndView;
 	}
 	
-	/**
-	 * 编辑人：Norman
-	 *
-	 * 功能：获取所有用户 测试方法
-	 * 
-	 * 时间：2015年12月22日
-	 * @return
-	 */
-	@RequestMapping("loginValidate")
-	@ResponseBody
-	public FrontMessage loginValidate(HttpServletRequest request,String userName,String password) {
-		password=Md5Encrypt.md5(password.toLowerCase());
-		FrontMessage message=new FrontMessage();
-		
-		
-		UserInfo user=this.userService.loginValidate(userName, password);
-		HttpSession session =request.getSession();
-		if(StringUtils.isEmpty(session)){
-			//session=new s
-		}
-		
-		request.getSession().setAttribute("userInfo", user);
-		if(user!=null){
-			message.setCode("success");
-			message.setMessage("登陆成功。");
-			message.setUrl("mng/index/index");
-		}else{
-			message.setCode("error");
-			message.setMessage("登陆失败。");
-		}
-		
-		return  message;
-	}
-	
-	/**
-	 * 编辑人：Norman
-	 *
-	 * 功能：获取所有用户 测试方法
-	 * 
-	 * 时间：2015年12月22日
-	 * @return
-	 */
-	@RequestMapping("selUser")
-	@ResponseBody
-	public String selUser() {
-		int userId = 1;
-		UserInfo user=this.userService.getUserById(userId);
-	    
-		return  JsonUtil.passToJson(user);
-	}
-	
+
 	/**
 	 * 编辑人：Norman
 	 *
@@ -199,20 +138,5 @@ public class IndexMngController {
 		return  modelAndView;
 	}
 	
-	/**
-	 * 编辑人：Norman
-	 *
-	 * 功能：获取所有用户 测试方法
-	 * 
-	 * 时间：2015年12月22日
-	 * @return
-	 */
-	@RequestMapping("loginOut")
-	@ResponseBody
-	public ModelAndView loginOut(HttpServletRequest request) {
-		
-		ModelAndView modelAndView=new ModelAndView("mngPage/index/index");
-		request.getSession().removeAttribute("userInfo");
-		return  modelAndView;
-	}
+
 }

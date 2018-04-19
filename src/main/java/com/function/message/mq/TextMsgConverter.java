@@ -16,30 +16,30 @@ import org.springframework.jms.support.converter.MessageConverter;
  */
 public class TextMsgConverter implements MessageConverter {
 
-	/**
-	 * 转化本程序要发到MQ上的消息
-	 */
-	public Message toMessage(Object obj, Session session) throws JMSException {
-		
-		ActiveMQTextMessage objMsg = null;
-		
-		if (obj instanceof String) {
-			objMsg = (ActiveMQTextMessage)session.createTextMessage(obj.toString());
-		}
-		
-		return objMsg;
-	}
+    /**
+     * 转化本程序要发到MQ上的消息
+     */
+    public Message toMessage(Object obj, Session session) throws JMSException {
 
-	/**
-	 * 转化MQ上过来的消息.
-	 */
-	public Object fromMessage(Message msg) throws JMSException {
-		String message = null;
-		
-		if (msg instanceof TextMessage) {
-			message = ((TextMessage)msg).getText();
-		}
-		
-		return message;
-	}
+        ActiveMQTextMessage objMsg = null;
+
+        if (obj instanceof String) {
+            objMsg = (ActiveMQTextMessage) session.createTextMessage(obj.toString());
+        }
+
+        return objMsg;
+    }
+
+    /**
+     * 转化MQ上过来的消息.
+     */
+    public Object fromMessage(Message msg) throws JMSException {
+        String message = null;
+
+        if (msg instanceof TextMessage) {
+            message = ((TextMessage) msg).getText();
+        }
+
+        return message;
+    }
 }

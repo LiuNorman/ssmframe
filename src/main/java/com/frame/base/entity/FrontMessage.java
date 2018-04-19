@@ -1,6 +1,5 @@
 package com.frame.base.entity;
 
-import sun.plugin2.message.Message;
 
 import java.util.Map;
 

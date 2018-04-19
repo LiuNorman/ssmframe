@@ -67,7 +67,7 @@ public class OrderMngController {
 		 * @return
 		 */
 		@RequestMapping("index")
-		public ModelAndView login(PageBean pageBean) {
+		public ModelAndView index(PageBean pageBean) {
 
 			String select = null;
 			ModelAndView modelAndView=new ModelAndView("mngPage/ordermng/ordermng");

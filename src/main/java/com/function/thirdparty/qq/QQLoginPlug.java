@@ -25,7 +25,7 @@ import com.frame.util.Md5Encrypt;
 public class QQLoginPlug {
 
 	/*@Autowired
-	private ISysConfigService configService;
+    private ISysConfigService configService;
 
 	@Autowired
 	private IUserConfigService userConfigService;

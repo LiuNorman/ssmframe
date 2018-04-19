@@ -5,54 +5,54 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * 
- *  功能： MD5加密
+ * 功能： MD5加密
  *
- *  @author Norman
- * 
- *  时间：2016年2月14日
+ * @author Norman
+ * <p>
+ * 时间：2016年2月14日
  */
-public class Md5Encrypt{
+public class Md5Encrypt {
 
-	private static final char[] DIGITS = { '0', '1', '2', '3', '4', '5', '6', 
-		'7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+    private static final char[] DIGITS = {'0', '1', '2', '3', '4', '5', '6',
+            '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
-	public static String md5(String text) {
+    public static String md5(String text) {
 
-		MessageDigest msgDigest = null;
+        MessageDigest msgDigest = null;
 
-		try {
-			msgDigest = MessageDigest.getInstance("MD5");
-		} catch (NoSuchAlgorithmException e) {
-			throw new IllegalStateException(
-					"System doesn't support MD5 algorithm.");
-		}
+        try {
+            msgDigest = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalStateException(
+                    "System doesn't support MD5 algorithm.");
+        }
 
-		try{
-			msgDigest.update(text.getBytes("utf-8"));
-		} catch (UnsupportedEncodingException e) {
-			throw new IllegalStateException(
-					"System doesn't support your  EncodingException.");
-		}
+        try {
+            msgDigest.update(text.getBytes("utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            throw new IllegalStateException(
+                    "System doesn't support your  EncodingException.");
+        }
 
-		byte[] bytes = msgDigest.digest();
+        byte[] bytes = msgDigest.digest();
 
-		String md5Str = new String(encodeHex(bytes));
+        String md5Str = new String(encodeHex(bytes));
 
-		return md5Str;
-	}
+        return md5Str;
+    }
 
-	public static char[] encodeHex(byte[] data) {
+    public static char[] encodeHex(byte[] data) {
 
-		int l = data.length;
+        int l = data.length;
 
-		char[] out = new char[l << 1];
+        char[] out = new char[l << 1];
 
-		int i = 0; for (int j = 0; i < l; i++) {
-			out[(j++)] = DIGITS[((0xF0 & data[i]) >>> 4)];
-			out[(j++)] = DIGITS[(0xF & data[i])];
-		}
+        int i = 0;
+        for (int j = 0; i < l; i++) {
+            out[(j++)] = DIGITS[((0xF0 & data[i]) >>> 4)];
+            out[(j++)] = DIGITS[(0xF & data[i])];
+        }
 
-		return out;
-	}
+        return out;
+    }
 }

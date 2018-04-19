@@ -2,6 +2,7 @@ package com.frame.controller.mng;
 
 import java.util.List;
 
+import com.frame.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,6 +72,7 @@ public class UserMngController {
 		return  user;
 		//return "\"{\"id\":1,\"userName\":\"刘晓文\",\"password\":\"123456\",\"age\":26}\"";
 	}
+
 	/**
 	 * 编辑人：Norman
 	 *

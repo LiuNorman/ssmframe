@@ -56,17 +56,7 @@ public class IndexController {
         System.out.println(this.indexService.getMessage());
     }
     
-    /**
-     * 功能：登陆功能 
-     * 
-     * 参数：@return
-     */
-    @RequestMapping("login")  
-    public ModelAndView login(){
-    	
-    	 
-    	return new ModelAndView("frontPage/login/login");
-    }
+
     
     /**
      * 前台页面初始化
@@ -184,38 +174,5 @@ public class IndexController {
     	
     }
     
-    /**
-	 * 编辑人：Norman
-	 *
-	 * 功能：获取所有用户 测试方法
-	 * 
-	 * 时间：2015年12月22日
-	 * @return
-	 */
-	@RequestMapping("loginValidate")
-	@ResponseBody
-	public FrontMessage loginValidate(HttpServletRequest request,String userName,String password) {
-		
-		password=Md5Encrypt.md5(password.toLowerCase());
-		FrontMessage message=new FrontMessage();
-		
-		
-		UserInfo user=this.userService.loginValidate(userName, password);
-		HttpSession session =request.getSession();
-		if(StringUtils.isEmpty(session)){
-			//session=new s
-		}
-		
-		request.getSession().setAttribute("userInfo", user);
-		if(user!=null){
-			message.setCode("success");
-			message.setMessage("登陆成功。");
-			message.setUrl("index/index/index.rb");
-		}else{
-			message.setCode("error");
-			message.setMessage("登陆失败。");
-		}
-		
-		return  message;
-	}
+
 }
