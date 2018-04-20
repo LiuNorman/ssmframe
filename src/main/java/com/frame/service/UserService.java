@@ -1,8 +1,8 @@
 package com.frame.service;
 
-import java.util.List;
-
 import com.frame.base.entity.UserInfo;
+
+import java.util.List;
 
 /**
  * @author Norman

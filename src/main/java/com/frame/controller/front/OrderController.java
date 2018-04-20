@@ -209,7 +209,21 @@ public class OrderController {
 		return  message;
 	}
 
+	/**
+	 * 编辑人：Norman
+	 *
+	 * 功能：后台管理主界面
+	 * 时间：2015年12月22日
+	 * @return
+	 */
+	@RequestMapping("orderList")
+	@ResponseBody
+	public List<OrderInfoQO> orderList(PageBean pageBean) {
 
+		List<OrderInfoQO> orders=this.orderService.getOrders(pageBean);
+
+		return orders;
+	}
 	/**
 	 * 编辑人：Norman
 	 *

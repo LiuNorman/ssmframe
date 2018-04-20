@@ -1,7 +1,5 @@
 package com.frame.pojo;
 
-import java.util.Date;
-
 /**
  * 订单信息实体类
  *

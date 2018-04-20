@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.frame.base.mapper.MobileImageMapper">
+
+	<resultMap id="BaseResultMap" type="com.frame.base.entity.MobileImage">
+
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="imageUrl" property="imageUrl" jdbcType="VARCHAR" />
+		<result column="detail" property="detail" jdbcType="VARCHAR" />
+		<result column="imageName" property="imageName" jdbcType="VARCHAR" />
+		<result column="size" property="size" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="imageType" property="imageType" jdbcType="VARCHAR" />
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="isDel" property="isDel" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+	</resultMap>
+	
+
+	<sql id="Base_Column_List">
+		id,imageUrl, detail, imageName, size,content,imageType,
+		createTime,updateTime,isDel,status
+	</sql>
+
+	<select id="list" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from mobile_image
+		<if test="pageBean.start !=null and pageBean.start !=''">
+			limit #{pageBean.start,jdbcType=INTEGER}
+		</if>
+		<if test="pageBean.pageCount !=null and pageBean.pageCount!=''">
+			,#{pageBean.pageCount,jdbcType=INTEGER}
+		</if>
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_order_logistics
+		where id = #{ id,jdbcType=INTEGER }
+	</delete>
+	
+
+</mapper>

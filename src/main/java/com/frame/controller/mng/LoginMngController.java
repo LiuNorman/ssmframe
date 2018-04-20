@@ -36,7 +36,7 @@ public class LoginMngController {
 	 *
 	 * 参数：@return
 	 */
-	@RequestMapping("login")
+	@RequestMapping("loginPage")
 	public ModelAndView login(){
 
 

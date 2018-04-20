@@ -144,3 +144,21 @@ CREATE TABLE `t_user_type` (
 -- Records of t_user_type
 -- ----------------------------
 INSERT INTO `t_user_type` VALUES ('1', '刘晓文', null, null, null, '1');
+
+DROP TABLE IF EXISTS `mobile_image`;
+CREATE TABLE `mobile_image` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `imageUrl` varchar(255) NOT NULL,
+  `detail` varchar(255) DEFAULT NULL COMMENT '地址',
+  `imageName` varchar(255) DEFAULT NULL COMMENT '名称',
+  `size` varchar(255) DEFAULT NULL COMMENT '尺寸',
+  `content` varchar(255) DEFAULT NULL COMMENT '主体',
+  `imageType` varchar(2) DEFAULT NULL COMMENT '类型',
+  `createTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
+  `isDel` varchar(2) DEFAULT '0' COMMENT '是否删除',
+  `status` varchar(2) DEFAULT '1' COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `mobile_image` VALUES ('1', 'resources/images/front/index/m1.jpg', '移动端banner图', '移动端banner图', '100*100', '', 'jpg', null, null, '0', '1');

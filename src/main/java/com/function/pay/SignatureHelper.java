@@ -1,14 +1,9 @@
 package com.function.pay;
 
-import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
 import com.frame.util.Md5Encrypt;
+
+import java.io.FileWriter;
+import java.util.*;
 
 public class SignatureHelper {
     public static String sign(Map params, String privateKey) {

@@ -32,7 +32,7 @@ public class LoginController {
      *
      * 参数：@return
      */
-    @RequestMapping("login")
+    @RequestMapping("loginPage")
     public ModelAndView login(){
 
 
