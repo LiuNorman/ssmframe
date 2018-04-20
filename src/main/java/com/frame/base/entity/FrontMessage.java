@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * 
- *  功能：提示消息类 
+ *  功能：返回提示消息类
  *
  *  @author Norman
  * 
@@ -21,7 +21,7 @@ public class FrontMessage {
 	private String code;
 	//返回url
 	private String url;
-
+	//返回数据
 	private Map data;
 	public String getMessage() {
 		return message;

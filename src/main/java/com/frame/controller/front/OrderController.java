@@ -70,7 +70,7 @@ public class OrderController {
 	/**
 	 * 编辑人：Norman
 	 *
-	 * 功能：获取订单信息测
+	 * 功能：获取订单信息
 	 * 
 	 * 时间：2015年12月22日
 	 * @return
@@ -78,8 +78,6 @@ public class OrderController {
 	@RequestMapping("selOrder")
 	@ResponseBody
 	public OrderInfo selOrder(int orderId) {
-		
-		//int orderId = 0;
 		
 		OrderInfo order=this.orderService.getOrderById(orderId);
 	    
@@ -126,7 +124,7 @@ public class OrderController {
 	/**
 	 * 编辑人：Norman
 	 *
-	 * 功能：获取所有用户 测试方法
+	 * 功能：发单
 	 * 
 	 * 时间：2015年12月22日
 	 * @return
@@ -147,7 +145,7 @@ public class OrderController {
 		}
 		log.info("OrderName"+order.getOrderName());
 		log.info("order.getOrderName()"+order.getAddress());
-		System.out.println(order.getOrderName()+order.getAddress());
+		log.info("发单："+order.getOrderName()+order.getAddress());
 		return  message;
 	}
 	

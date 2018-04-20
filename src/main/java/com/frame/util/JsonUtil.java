@@ -9,7 +9,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import java.io.IOException;
 
 /**
- * Json操作类
+ * Json操作工具类
  *
  * @author Norman
  * @version 2014-4-2

@@ -75,10 +75,10 @@ INSERT INTO `t_order_logistics` VALUES ('5', '测试订单', '1', '0', '121212',
 INSERT INTO `t_order_logistics` VALUES ('6', '测试订单', '1', '0', '18354231330', '测试地址', '2016-02-13 00:00:00', null, '0', '2016-02-13 00:00:00', '10', null, '测试内容');
 
 -- ----------------------------
--- Table structure for `t_role_info`
+-- Table structure for `role_info`
 -- ----------------------------
-DROP TABLE IF EXISTS `t_role_info`;
-CREATE TABLE `t_role_info` (
+DROP TABLE IF EXISTS `role_info`;
+CREATE TABLE `role_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '角色ID',
   `roleName` varchar(255) NOT NULL COMMENT '角色名称',
   `address` varchar(255) DEFAULT NULL COMMENT '地址',
@@ -94,10 +94,10 @@ CREATE TABLE `t_role_info` (
 INSERT INTO `t_role_info` VALUES ('1', '刘晓文', null, null, null, '1');
 
 -- ----------------------------
--- Table structure for `t_user_info`
+-- Table structure for `user_info`
 -- ----------------------------
-DROP TABLE IF EXISTS `t_user_info`;
-CREATE TABLE `t_user_info` (
+DROP TABLE IF EXISTS `user_info`;
+CREATE TABLE `user_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cardID` varchar(255) DEFAULT NULL COMMENT '身份证',
   `account` varchar(255) DEFAULT NULL COMMENT '账号',
@@ -106,37 +106,41 @@ CREATE TABLE `t_user_info` (
   `age` int(11) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL COMMENT '电话',
   `address` varchar(255) DEFAULT NULL COMMENT '地址',
-  `createTime` datetime DEFAULT NULL COMMENT '创建时间',
-  `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
-  `userStatus` varchar(2) DEFAULT '1' COMMENT '用户状态',
   `roleId` int(11) DEFAULT NULL COMMENT '用户类型',
   `userMoney` varchar(255) DEFAULT NULL COMMENT '账户余额',
   `makeMoney` varchar(255) DEFAULT NULL COMMENT '赚得的钱',
   `consumption` varchar(255) DEFAULT NULL COMMENT '消费款',
   `drivingLicenceImage` varchar(255) DEFAULT NULL COMMENT '驾驶证照片',
+  `diverValidateTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `validitycardID` varchar(255) DEFAULT NULL COMMENT '有效证件',
+  `cardImage` varchar(255) DEFAULT NULL COMMENT '身份证证照片',
+  `cardValidateTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `createTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
+  `userStatus` varchar(2) DEFAULT '1' COMMENT '用户状态',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_user_info
 -- ----------------------------
-INSERT INTO `t_user_info` VALUES ('1', null, '刘晓文', '123456', '26', null, null, null, null, '1', null, null, null, null, null);
-INSERT INTO `t_user_info` VALUES ('2', '1212', '修改后的用户名', '1212', '0', '1212', '更新地址', null, null, null, '1', null, null, null, null);
-INSERT INTO `t_user_info` VALUES ('3', '1212', '12121', '1212', '12', '121', '12', null, null, '1', '0', null, null, null, null);
-INSERT INTO `t_user_info` VALUES ('4', '371323199007182115', '刘晓文测试', '123123', '27', '18354231330', '祉村', null, null, '1', '0', null, null, null, null);
-INSERT INTO `t_user_info` VALUES ('5', '12121212', 'woshi', 'e10adc3949ba59abbe56e057f20f883e', '12', '121321312', 'ldjslk', null, null, '1', '0', null, null, null, null);
+INSERT INTO `user_info` VALUES ('1', null, '刘晓文', '123456', '26', null, null, null, null, '1', null, null, null, null, null);
+INSERT INTO `user_info` VALUES ('2', '1212', '修改后的用户名', '1212', '0', '1212', '更新地址', null, null, null, '1', null, null, null, null);
+INSERT INTO `user_info` VALUES ('3', '1212', '12121', '1212', '12', '121', '12', null, null, '1', '0', null, null, null, null);
+INSERT INTO `user_info` VALUES ('4', '371323199007182115', '刘晓文测试', '123123', '27', '18354231330', '祉村', null, null, '1', '0', null, null, null, null);
+INSERT INTO `user_info` VALUES ('5', '12121212', 'woshi', 'e10adc3949ba59abbe56e057f20f883e', '12', '121321312', 'ldjslk', null, null, '1', '0', null, null, null, null);
 
 -- ----------------------------
--- Table structure for `t_user_type`
+-- Table structure for `user_type`
 -- ----------------------------
-DROP TABLE IF EXISTS `t_user_type`;
-CREATE TABLE `t_user_type` (
+DROP TABLE IF EXISTS `user_type`;
+CREATE TABLE `user_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userTypeName` varchar(255) NOT NULL,
   `address` varchar(255) DEFAULT NULL COMMENT '地址',
   `createTime` datetime DEFAULT NULL COMMENT '创建时间',
   `updateTime` datetime DEFAULT NULL COMMENT '更新时间',
-  `userTypeStatus` varchar(2) DEFAULT '1' COMMENT '用户状态',
+  `status` varchar(2) DEFAULT '1' COMMENT '用户状态',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 

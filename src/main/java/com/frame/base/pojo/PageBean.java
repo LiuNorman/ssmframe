@@ -7,6 +7,7 @@ public class PageBean {
 	// 分页起始位置
 	private int start;
 	private String select;
+	private String orderBy;
 	public int getPageIndex() {
 		return pageIndex;
 	}
@@ -31,5 +32,12 @@ public class PageBean {
 	public void setStart(int start) {
 		this.start = start;
 	}
-	
+
+	public String getOrderBy() {
+		return orderBy;
+	}
+
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
+	}
 }

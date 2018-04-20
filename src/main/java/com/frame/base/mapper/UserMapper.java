@@ -20,7 +20,7 @@ public interface UserMapper {
 	 *
 	 * 功能：测试，获取用户信息
 	 * 时间：2015年12月22日
-	 * @param userId
+	 * @param id
 	 * @return
 	 */
 	public UserInfo getUserById(@Param("id")int id);
@@ -41,7 +41,6 @@ public interface UserMapper {
 	 *
 	 * 功能：获取所有用户信息
 	 * 时间：2015年12月23日
-	 * @param userId
 	 * @return
 	 */
 	public List<UserInfo> getUsers(); 
@@ -56,7 +55,7 @@ public interface UserMapper {
 	/**
 	 * 修改用户
 	 * 
-	 * @param Norman
+	 * @param user
 	 * @return
 	 */
 	public int editUser(UserInfo user);

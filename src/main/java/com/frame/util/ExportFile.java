@@ -24,26 +24,21 @@ import java.util.regex.Pattern;
  * @param <T> 应用泛型，代表任意一个符合javabean风格的类
  *            注意这里为了简单起见，boolean型的属性xxx的get器方式为getXxx(),而不是isXxx()
  *            byte[]表jpg格式的图片数据
- * @author leno
+ * @author Norman
  * @version v1.0
  */
 @Component
 public class ExportFile<T> {
-
-    public static void main(String[] args) {
-
-    }
-
 
     /**
      * 导出excel表格
      * Map<String,String> properties,
      * list 到处数据
      */
-    public HSSFWorkbook exportExcel(String[] excelHead, List<String> properties, List<T> list) {
+    public HSSFWorkbook exportExcel(String[] excelHead, List<String> properties, List<T> list, String sheetName) {
         //
         HSSFWorkbook workBook = new HSSFWorkbook();
-        HSSFSheet sheet = workBook.createSheet("债债通平台");
+        HSSFSheet sheet = workBook.createSheet(sheetName);
         HSSFRow row = sheet.createRow((int) 0);
         HSSFCellStyle style = workBook.createCellStyle();
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER);

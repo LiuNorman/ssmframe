@@ -70,7 +70,7 @@
 		orders.createTime, orders.updateTime,orders.orderStatus,orders.serviceTime,orders.requireTime,
 		orders.orderDescription,customer.userName customerName,courier.userName courierName 
 		from t_order_logistics orders left join  t_user_info customer  on  orders.customerId= customer.id
-		left join t_user_info courier on orders.courierId=courier.id
+		left join user_info courier on orders.courierId=courier.id
 		<where>
 				orderStatus != 2
 			<if test="pageBean.select !=null and pageBean.select !=''">
@@ -91,8 +91,8 @@
 	<!-- #{start,jdbcType=INTEGER} parameterType="hashMap"-->
 	<select id="allPages" resultType="int">
 		select count(orders.id)
-		from t_order_logistics orders left join  t_user_info customer  on  orders.customerId= customer.id
-		left join t_user_info courier on orders.courierId=courier.id
+		from t_order_logistics orders left join  user_info customer  on  orders.customerId= customer.id
+		left join user_info courier on orders.courierId=courier.id
 		<where>
 				orderStatus != 2
 			<if test="pageBean.select !=null and pageBean.select !=''">
@@ -133,8 +133,8 @@
 		select orders.id,orders.orderName, orders.customerId, orders.courierId,orders.phone,orders.address,
 		orders.createTime, orders.updateTime,orders.orderStatus,orders.serviceTime,orders.requireTime,
 		orders.orderDescription,customer.userName customerName,courier.userName courierName 
-		from t_order_logistics orders left join  t_user_info customer  on  orders.customerId= customer.id
-		left join t_user_info courier on orders.courierId=courier.id
+		from order_logistics orders left join  user_info customer  on  orders.customerId= customer.id
+		left join user_info courier on orders.courierId=courier.id
 		<where>
 				orders.orderStatus =#{statue,jdbcType=INTEGER}
 		</where>
@@ -152,18 +152,18 @@
 		parameterType="java.lang.Integer">
 		select
 		<include refid="Base_Column_List" />
-		from t_order_logistics
+		from order_logistics
 		where id = #{
 		id,jdbcType=INTEGER
 		}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from t_order_logistics
+		delete from order_logistics
 		where id = #{ id,jdbcType=INTEGER }
 	</delete>
 	
 	<insert id="sendOrderLogistics" parameterType="com.frame.base.entity.OrderInfo">
-		insert into t_order_logistics (id, orderName,customerId, courierId, phone,address,createTime,updateTime,orderStatus,serviceTime,requireTime,orderDescription)
+		insert into order_logistics (id, orderName,customerId, courierId, phone,address,createTime,updateTime,orderStatus,serviceTime,requireTime,orderDescription)
 		values (
 		#{id,jdbcType=INTEGER },
 		#{orderName,jdbcType=INTEGER },
@@ -181,7 +181,7 @@
 	</insert>
 	
 	<insert id="sendOrderInfo" parameterType="com.frame.base.entity.OrderInfo">
-		insert into t_order_info (id, orderName,customerId, courierId, phone,address,createTime,updateTime,orderStatus,serviceTime,requireTime,orderDescription)
+		insert into order_info (id, orderName,customerId, courierId, phone,address,createTime,updateTime,orderStatus,serviceTime,requireTime,orderDescription)
 		values (
 		#{id,jdbcType=INTEGER },
 		#{orderName,jdbcType=INTEGER },
@@ -199,7 +199,7 @@
 	</insert>
 	
 	<insert id="sendOrderDetail" parameterType="com.frame.base.entity.OrderInfo">
-		insert into t_order_Detail (orderName,customerId, courierId, phone,address,
+		insert into order_detail (orderName,customerId, courierId, phone,address,
 		createTime,updateTime,orderStatus,serviceTime,requireTime,orderDescription,orderId,orderType)
 		values (
 		
@@ -220,7 +220,7 @@
 	</insert>
 	
 	<insert id="insertSelective" parameterType="com.frame.base.entity.OrderInfo">
-		insert into t_order_info
+		insert into order_info
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
 				id,
@@ -261,7 +261,7 @@
 	
 	
 	<update id="updateByPrimaryKeySelective" parameterType="com.frame.base.entity.OrderInfo">
-		update t_order_info
+		update order_info
 		<set>
 			<if test="orderName != null">
 				orderName = #{
@@ -282,7 +282,7 @@
 	
 	<!-- 接单 -->
 	<update id="reciveOrder" parameterType="com.frame.base.entity.OrderInfo">
-		update t_order_logistics
+		update order_logistics
 		<set>
 			<if test="courierId != null and courierId!=''">
 				courierId = #{courierId,jdbcType=INTEGER},
@@ -299,7 +299,7 @@
 	
 	<!-- 接单 -->
 	<update id="reciveOrderDetail" parameterType="com.frame.base.entity.OrderInfo">
-		update t_order_detail
+		update order_detail
 		<set>
 			<if test="courierId != null and courierId!=''">
 				courierId = #{courierId,jdbcType=INTEGER},
@@ -315,7 +315,7 @@
 	</update>
 	
 	<update id="updateByPrimaryKey" parameterType="com.frame.base.entity.OrderInfo">
-		update t_order_logistics
+		update order_logistics
 		set orderName = #{
 		orderName,jdbcType=VARCHAR
 		}
